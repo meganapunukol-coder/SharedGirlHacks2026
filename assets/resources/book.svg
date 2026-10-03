@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 500">
+  <defs><linearGradient id="bg" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#2a2340"/><stop offset="1" stop-color="#5a4f7a"/></linearGradient></defs>
+  <rect width="330" height="500" fill="url(#bg)"/>
+  <g fill="#f7df9a" opacity=".8"><circle cx="58" cy="52" r="2"/><circle cx="262" cy="70" r="2.5"/><circle cx="300" cy="160" r="1.6"/><circle cx="30" cy="140" r="1.8"/><circle cx="180" cy="30" r="1.5"/></g>
+  <circle cx="165" cy="200" r="100" fill="#f2d892" opacity=".1"/>
+  <path d="M165 150q-48-20-92-8v120q44-12 92 8z" fill="#fbf7eb" stroke="#d9b66d" stroke-width="3"/>
+  <path d="M165 150q48-20 92-8v120q-44-12-92 8z" fill="#f4edda" stroke="#d9b66d" stroke-width="3"/>
+  <g stroke="#b8a674" stroke-width="3" stroke-linecap="round"><path d="M88 172q30-6 62 4M88 194q30-6 62 4M88 216q30-6 62 4"/><path d="M180 176q32-10 62-4M180 198q32-10 62-4M180 220q32-10 62-4"/></g>
+  <path d="M165 150v120" stroke="#a17b34" stroke-width="3"/>
+  <text x="165" y="125" fill="#f2d892" font-size="22" text-anchor="middle">✦</text>
+  <path d="M0 410q90-36 170-4t160-10v104H0z" fill="#1c1730"/>
+</svg>

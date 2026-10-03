@@ -16,8 +16,18 @@
   <script src="game.js" defer></script>
   <script src="assets/sparkles-data.js" defer></script>
   <script src="sparkles.js" defer></script>
+  <script src="resources-carousel.js" defer></script>
 </head>
 <body>
+  <div class="intro-video" id="intro-video" role="dialog" aria-label="Opening film" aria-modal="true">
+    <video id="intro-video-player" src="assets/ElevenLabs_video_gemini-omni-flash-1-1_make%20a%20video%20it_2026-10-03T20_41_21.mp4" playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"></video>
+    <button class="intro-video-start" id="intro-video-start" type="button">
+      <span class="intro-video-start-mark" aria-hidden="true">✦</span>
+      <span class="intro-video-start-title">Into the Unknown</span>
+      <span class="intro-video-start-hint">Tap anywhere to begin</span>
+    </button>
+    <button class="intro-video-skip" id="intro-video-skip" type="button">skip</button>
+  </div>
   <div class="forest-backdrop" aria-hidden="true"></div>
   <canvas class="sparkle-canvas" id="sparkle-canvas" aria-hidden="true"></canvas>
   <header class="topbar">
@@ -228,6 +238,9 @@
         <p class="eyebrow"><span class="eyebrow-line"></span> YOUR TRAVELER'S GUIDE</p>
         <h1 id="resources-title">A few things to know<br>before <em>you wander.</em></h1>
         <p class="page-deck">Small ideas to carry with you. The grove will help you explore them one choice at a time.</p>
+      </div>
+      <div class="resources-carousel" id="resources-carousel" aria-label="Resource links" aria-busy="true">
+        <p class="resources-carousel-loading">Opening the traveler's library…</p>
       </div>
       <div class="resource-guide-grid">
         <article class="story-card resource-guide-card"><span class="resource-guide-icon" aria-hidden="true">◈</span><p class="scene-kicker">01 · MAKE A PLAN</p><h2>Needs & wants</h2><p>Notice what matters now, what can wait, and how today's choice affects what is possible later.</p></article>
