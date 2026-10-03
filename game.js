@@ -1,6 +1,6 @@
 const startingGoldOptions = [50, 75, 100, 150, 200];
 const elevenLabsNarrationPath = null;
-const introNarrationScript = "Once upon a time, beneath the moonlit branches of the Enchanted Grove, a prince was taken to the Tower of Shadows. At the far end of the forest, his lantern blinked like a distant star. Princess Rowan stepped beneath the trees. She could not choose what was in her purse. She could choose how to care for it. Her story begins now.";
+const introNarrationScript = "Once upon a time, beneath the moonlit branches of the Enchanted Grove, a prince was trapped in a tower at the forest's far end. His lantern flickered like a distant star. Back at the grove's entrance, Princess Rowan took a breath and stepped onto the path. She could not choose the purse she carried, but she could choose how to use it. Her adventure begins now.";
 const chapters = [
   {
     id: "gate", kicker: "CHAPTER 1 · THE FOREST GATE", title: "Five days to the Tower of Shadows.",
@@ -273,17 +273,21 @@ function startCinematic() {
   setCaption("ONCE UPON A TIME", "Beneath the moonlit branches of the Enchanted Grove...");
   introTimers.push(window.setTimeout(() => {
     cinematicArt.className = "cinematic-art is-tower";
-    setCaption("THE TOWER OF SHADOWS", "At the forest's far end, a prince is trapped in a tower of dark stone.");
-  }, 3800));
+    setCaption("THE TOWER OF SHADOWS", "At the forest's far end, a prince is trapped. His lantern flickers like a distant star.");
+  }, 4200));
   introTimers.push(window.setTimeout(() => {
     cinematicArt.className = "cinematic-art";
-    setCaption("A PRINCESS SETS OUT", "Princess Rowan steps beneath the trees. She cannot choose her starting purse, but she can choose how to use it.");
-  }, 7600));
+    setCaption("BACK AT THE GROVE", "At the forest's entrance, a new story is ready to begin.");
+  }, 9000));
   introTimers.push(window.setTimeout(() => {
     cinematicArt.className = "cinematic-art is-princess";
+    setCaption("MEET PRINCESS ROWAN", "She takes a breath, steps onto the path, and chooses to begin.");
+  }, 12300));
+  introTimers.push(window.setTimeout(() => {
+    cinematicArt.className = "cinematic-art";
     setCaption("THE GOLDEN COIN", `The coin tumbles... Rowan begins with ${state.startingGold} gold. Her adventure is her own.`);
-  }, 10400));
-  introTimers.push(window.setTimeout(startAdventure, 18000));
+  }, 17000));
+  introTimers.push(window.setTimeout(startAdventure, 24000));
 }
 
 function setCaption(kicker, line) {
