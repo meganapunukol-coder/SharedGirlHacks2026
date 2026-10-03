@@ -232,6 +232,23 @@ const chapterNote = document.querySelector("#chapter-note");
 const soundToggle = document.querySelector("#sound-toggle");
 const soundLabel = document.querySelector("#sound-label");
 const narration = document.querySelector("#intro-narration");
+const pageViews = [...document.querySelectorAll("[data-page]")];
+const pageLinks = [...document.querySelectorAll(".nav-link")];
+const profileNodes = {
+  journeys: document.querySelector("#profile-journeys"),
+  rescues: document.querySelector("#profile-rescues"),
+  health: document.querySelector("#profile-health"),
+  goldSpent: document.querySelector("#profile-gold-spent"),
+  style: document.querySelector("#profile-style"),
+  styleDescription: document.querySelector("#profile-style-description"),
+  historyCount: document.querySelector("#profile-history-count"),
+  empty: document.querySelector("#profile-empty"),
+  history: document.querySelector("#journey-list"),
+  storageStatus: document.querySelector("#profile-storage-status"),
+  current: document.querySelector("#profile-current"),
+  currentTitle: document.querySelector("#profile-current-title"),
+  currentSummary: document.querySelector("#profile-current-summary")
+};
 const resourceFields = {
   gold: document.querySelector("#gold-value"),
   health: document.querySelector("#health-value"),
@@ -245,6 +262,146 @@ let hasChosen = false;
 let introTimers = [];
 let gameStarted = false;
 let soundOn = true;
+let journeySaved = false;
+let profileStorageMessage = "";
+
+const profileStorageKey = "enchanted-grove-journeys";
+const profileDescriptions = {
+  "THE RISK TAKER": "You explored uncertain paths. Consider how much risk you can afford and what information you want before your next decision.",
+  "THE OPPORTUNIST": "You found value in information, relationships, and alternate routes, not only in gold.",
+  "THE SPENDER": "You chose useful or exciting purchases along the way. Every purchase had a tradeoff with another possible use for that gold.",
+  "THE SAVER": "You kept a large share of your starting gold available. Saving can create flexibility, while spending on needs can also be worthwhile.",
+  "THE PRUDENT PRINCESS": "You balanced needs, surprises, and the resources available to you. Another starting purse could lead to a different plan."
+};
+
+function navigateToPage() {
+  const pageName = window.location.hash.slice(1) || "home";
+  const activePage = pageViews.find((page) => page.dataset.page === pageName) ?? pageViews[0];
+  pageViews.forEach((page) => {
+    page.hidden = page !== activePage;
+    page.classList.toggle("is-active", page === activePage);
+  });
+  pageLinks.forEach((link) => {
+    const isActive = link.hash === `#${activePage.dataset.page}`;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+  if (activePage.dataset.page === "profile") renderProfilePage();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function readJourneyHistory() {
+  try {
+    const saved = window.localStorage.getItem(profileStorageKey);
+    if (saved === null) return { journeys: [], error: "" };
+    const journeys = JSON.parse(saved);
+    if (!Array.isArray(journeys) || journeys.some((journey) =>
+      !journey || typeof journey !== "object" ||
+      !Number.isFinite(journey.startingGold) ||
+      !Number.isFinite(journey.gold) ||
+      !Number.isFinite(journey.totalSpent) ||
+      !Number.isFinite(journey.health) ||
+      journey.totalSpent < 0 ||
+      journey.health < 0 ||
+      journey.health > 100 ||
+      !["rescuer", "clever", "community", "unfinished"].includes(journey.ending) ||
+      !Object.prototype.hasOwnProperty.call(profileDescriptions, journey.profile) ||
+      typeof journey.completedAt !== "string" ||
+      !Number.isFinite(Date.parse(journey.completedAt))
+    )) {
+      return { journeys: [], error: "Saved journey history is invalid and could not be displayed." };
+    }
+    return { journeys, error: "" };
+  } catch {
+    return { journeys: [], error: "Journey history could not be read from this browser." };
+  }
+}
+
+function renderProfilePage() {
+  const { journeys, error } = readJourneyHistory();
+  const rescues = journeys.filter((journey) => journey.ending !== "unfinished").length;
+  const averageHealth = journeys.length
+    ? Math.round(journeys.reduce((total, journey) => total + journey.health, 0) / journeys.length)
+    : null;
+  const totalSpent = journeys.reduce((total, journey) => total + journey.totalSpent, 0);
+  const styleCounts = journeys.reduce((counts, journey) => {
+    counts[journey.profile] = (counts[journey.profile] ?? 0) + 1;
+    return counts;
+  }, {});
+  const mostCommonStyle = Object.entries(styleCounts).sort((first, second) => second[1] - first[1])[0]?.[0];
+
+  profileNodes.journeys.textContent = String(journeys.length);
+  profileNodes.rescues.textContent = String(rescues);
+  profileNodes.health.textContent = averageHealth === null ? "—" : `${averageHealth}%`;
+  profileNodes.goldSpent.textContent = String(totalSpent);
+  profileNodes.style.textContent = mostCommonStyle ?? "Your story is just beginning.";
+  profileNodes.styleDescription.textContent = mostCommonStyle
+    ? profileDescriptions[mostCommonStyle] ?? "Your choices have left their mark on the grove."
+    : "Finish a journey to discover the patterns in your choices.";
+  profileNodes.historyCount.textContent = `${journeys.length} ${journeys.length === 1 ? "entry" : "entries"}`;
+  profileNodes.empty.hidden = journeys.length > 0;
+  profileNodes.history.replaceChildren();
+  const storageMessage = error || profileStorageMessage;
+  profileNodes.storageStatus.textContent = storageMessage;
+  profileNodes.storageStatus.hidden = !storageMessage;
+
+  journeys.slice(-5).reverse().forEach((journey) => {
+    const item = document.createElement("li");
+    item.className = "journey-entry";
+    const details = document.createElement("div");
+    const profileName = document.createElement("strong");
+    profileName.textContent = journey.profile;
+    const outcome = document.createElement("span");
+    outcome.textContent = journey.ending === "unfinished" ? "The journey continues" : "Prince Ellis rescued";
+    details.append(profileName, outcome);
+    const summary = document.createElement("span");
+    summary.className = "journey-summary";
+    summary.textContent = `${journey.gold} gold left · ${journey.health}% health`;
+    const date = document.createElement("time");
+    date.dateTime = journey.completedAt;
+    date.textContent = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(journey.completedAt));
+    item.append(details, summary, date);
+    profileNodes.history.append(item);
+  });
+
+  const hasCurrentJourney = gameStarted && !state.ending;
+  profileNodes.current.hidden = !hasCurrentJourney;
+  if (hasCurrentJourney) {
+    const chapterInProgress = chapters[currentChapter];
+    profileNodes.currentTitle.textContent = chapterInProgress.title;
+    profileNodes.currentSummary.textContent = `${chapterInProgress.kicker} · ${state.gold} gold · ${state.health} health · ${state.supplies} supplies`;
+  }
+}
+
+function saveCompletedJourney(profile) {
+  if (journeySaved) return;
+  const { journeys, error } = readJourneyHistory();
+  if (error) {
+    profileStorageMessage = error;
+    profileNodes.storageStatus.textContent = profileStorageMessage;
+    profileNodes.storageStatus.hidden = false;
+    return;
+  }
+  const record = {
+    startingGold: state.startingGold,
+    gold: state.gold,
+    totalSpent: state.totalSpent,
+    health: state.health,
+    ending: state.ending,
+    profile: profile.name,
+    completedAt: new Date().toISOString()
+  };
+  try {
+    window.localStorage.setItem(profileStorageKey, JSON.stringify([...journeys, record]));
+    journeySaved = true;
+    profileStorageMessage = "";
+  } catch {
+    profileStorageMessage = "This journey could not be saved. Check that browser storage is available.";
+    profileNodes.storageStatus.textContent = profileStorageMessage;
+    profileNodes.storageStatus.hidden = false;
+  }
+}
 
 function resetGame() {
   Object.assign(state, {
@@ -256,6 +413,8 @@ function resetGame() {
   });
   currentChapter = 0;
   gameStarted = true;
+  journeySaved = false;
+  state.gold = state.startingGold;
 }
 
 function startCinematic() {
@@ -312,7 +471,6 @@ function startAdventure() {
   cinematic.hidden = true;
   intro.hidden = true;
   adventure.hidden = false;
-  state.gold = state.startingGold;
   renderChapter();
   sceneTitle.focus({ preventScroll: true });
   adventure.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -417,6 +575,7 @@ function renderEnding() {
   };
   const [endingTitle, endingText] = endings[state.ending] ?? endings.unfinished;
   const profile = getFinancialProfile();
+  saveCompletedJourney(profile);
   sceneKicker.textContent = "THE GROVE REMEMBERS";
   sceneTitle.textContent = state.ending === "unfinished" ? "The Tower is not the end of Rowan's story." : "The prince is free. The story belongs to Rowan.";
   sceneText.textContent = endingText;
@@ -450,11 +609,11 @@ function renderEnding() {
 }
 
 function getFinancialProfile() {
-  if (state.riskChoices >= 2) return { name: "THE RISK TAKER", description: "You explored uncertain paths. Consider how much risk you can afford and what information you want before your next decision." };
-  if (state.helpedVillagers || state.items.has("map") || state.shortcut) return { name: "THE OPPORTUNIST", description: "You found value in information, relationships, and alternate routes, not only in gold." };
-  if (state.purchases >= 3 || state.totalSpent >= 70) return { name: "THE SPENDER", description: "You chose useful or exciting purchases along the way. Every purchase had a tradeoff with another possible use for that gold." };
-  if (state.gold >= state.startingGold * 0.65) return { name: "THE SAVER", description: "You kept a large share of your starting gold available. Saving can create flexibility, while spending on needs can also be worthwhile." };
-  return { name: "THE PRUDENT PRINCESS", description: "You balanced needs, surprises, and the resources available to you. Another starting purse could lead to a different plan." };
+  if (state.riskChoices >= 2) return { name: "THE RISK TAKER", description: profileDescriptions["THE RISK TAKER"] };
+  if (state.helpedVillagers || state.items.has("map") || state.shortcut) return { name: "THE OPPORTUNIST", description: profileDescriptions["THE OPPORTUNIST"] };
+  if (state.purchases >= 3 || state.totalSpent >= 70) return { name: "THE SPENDER", description: profileDescriptions["THE SPENDER"] };
+  if (state.gold >= state.startingGold * 0.65) return { name: "THE SAVER", description: profileDescriptions["THE SAVER"] };
+  return { name: "THE PRUDENT PRINCESS", description: profileDescriptions["THE PRUDENT PRINCESS"] };
 }
 
 function restartStory() {
@@ -521,6 +680,8 @@ beginButton.addEventListener("click", startCinematic);
 skipButton.addEventListener("click", startCinematic);
 cinematicSkip.addEventListener("click", skipCinematic);
 continueButton.addEventListener("click", advanceStory);
+window.addEventListener("hashchange", navigateToPage);
+navigateToPage();
 soundToggle.addEventListener("click", () => {
   soundOn = !soundOn;
   soundToggle.setAttribute("aria-pressed", String(soundOn));

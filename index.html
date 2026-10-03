@@ -19,14 +19,20 @@
       <span>GROVE<span class="wordmark-light"> / STORIES</span></span>
     </a>
     <div class="topbar-right">
-      <span class="chapter-label">A STORY ABOUT CHOICES</span>
+      <nav class="primary-nav" aria-label="Main menu">
+        <a class="nav-link is-active" href="#home" aria-current="page">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#resources">Resources</a>
+        <a class="nav-link" href="#profile">My profile</a>
+      </nav>
       <button class="sound-button" id="sound-toggle" type="button" aria-pressed="true" aria-label="Turn narration off">
         <span aria-hidden="true">♫</span><span id="sound-label">Narration on</span>
       </button>
     </div>
   </header>
 
-  <main id="home">
+  <main id="main-content">
+    <div class="site-page is-active" id="home-page" data-page="home">
     <section class="intro" id="intro" aria-labelledby="intro-title">
       <div class="intro-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> A CHOOSE-YOUR-OWN-ADVENTURE</p>
@@ -152,6 +158,84 @@
         </div>
       </div>
       <p class="game-note">A story for learning and reflection, not personal financial advice.</p>
+    </section>
+    </div>
+
+    <section class="site-page interior-page" id="about-page" data-page="about" aria-labelledby="about-title" hidden>
+      <div class="page-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> A LITTLE ABOUT OUR WORLD</p>
+        <h1 id="about-title">Stories make room<br>for <em>possibility.</em></h1>
+        <p class="page-deck">The Enchanted Grove is a choose-your-own-adventure about the everyday choices that shape our lives—and the many ways a story can unfold.</p>
+      </div>
+      <div class="about-grid">
+        <article class="story-card about-card">
+          <span class="card-ornament" aria-hidden="true">✳</span>
+          <p class="scene-kicker">OUR PURPOSE</p>
+          <h2>Learn by living the story.</h2>
+          <p>Follow Princess Rowan through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.</p>
+        </article>
+        <article class="story-card about-card about-card-accent">
+          <span class="card-ornament" aria-hidden="true">✦</span>
+          <p class="scene-kicker">OUR PROMISE</p>
+          <h2>Your path is your own.</h2>
+          <p>There is no single perfect way through the grove. Different resources create different possibilities, and a detour is still part of the adventure. This is a space for curiosity, reflection, and trying again.</p>
+        </article>
+      </div>
+      <div class="page-callout">
+        <div><p class="scene-kicker">READY WHEN YOU ARE</p><h2>Turn the first page.</h2></div>
+        <a class="primary-button" href="#home"><span>Begin the adventure</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="site-page interior-page" id="resources-page" data-page="resources" aria-labelledby="resources-title" hidden>
+      <div class="page-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> YOUR TRAVELER'S GUIDE</p>
+        <h1 id="resources-title">A few things to know<br>before <em>you wander.</em></h1>
+        <p class="page-deck">Small ideas to carry with you. The grove will help you explore them one choice at a time.</p>
+      </div>
+      <div class="resource-guide-grid">
+        <article class="story-card resource-guide-card"><span class="resource-guide-icon" aria-hidden="true">◈</span><p class="scene-kicker">01 · MAKE A PLAN</p><h2>Needs & wants</h2><p>Notice what matters now, what can wait, and how today's choice affects what is possible later.</p></article>
+        <article class="story-card resource-guide-card"><span class="resource-guide-icon" aria-hidden="true">⚖</span><p class="scene-kicker">02 · WEIGH THE PATHS</p><h2>Risk & reward</h2><p>A free option can still have a cost. Think about what you might gain, what you could lose, and how much uncertainty feels right.</p></article>
+        <article class="story-card resource-guide-card"><span class="resource-guide-icon" aria-hidden="true">✧</span><p class="scene-kicker">03 · KEEP ROOM TO MOVE</p><h2>Saving & surprises</h2><p>Keeping some resources available can make an unexpected turn easier to handle—and give you more choices down the road.</p></article>
+        <article class="story-card resource-guide-card"><span class="resource-guide-icon" aria-hidden="true">❋</span><p class="scene-kicker">04 · VALUE ISN'T ONLY GOLD</p><h2>Community & creativity</h2><p>Information, trust, and a helping hand can open doors that money alone cannot. Look for the value in every resource.</p></article>
+      </div>
+      <p class="resource-disclaimer">These story prompts are for learning and reflection, not personal financial advice.</p>
+    </section>
+
+    <section class="site-page interior-page profile-page" id="profile-page" data-page="profile" aria-labelledby="profile-title" hidden>
+      <div class="page-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> YOUR FIELD NOTES</p>
+        <h1 id="profile-title">Every journey leaves<br>a <em>little wisdom.</em></h1>
+        <p class="page-deck">A private scrapbook of your adventures, saved on this device. Your choices are yours alone.</p>
+      </div>
+      <div class="profile-current" id="profile-current" hidden>
+        <div><p class="scene-kicker">IN PROGRESS</p><h2 id="profile-current-title">Your current journey</h2></div>
+        <p id="profile-current-summary"></p>
+        <a class="continue-profile-link" href="#home">Return to your story <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="profile-stats" aria-label="Journey statistics">
+        <article class="stat-card"><span class="stat-icon" aria-hidden="true">📖</span><span class="stat-label">JOURNEYS</span><strong id="profile-journeys">0</strong></article>
+        <article class="stat-card"><span class="stat-icon" aria-hidden="true">🏰</span><span class="stat-label">PRINCES RESCUED</span><strong id="profile-rescues">0</strong></article>
+        <article class="stat-card"><span class="stat-icon" aria-hidden="true">💚</span><span class="stat-label">AVERAGE HEALTH</span><strong id="profile-health">—</strong></article>
+        <article class="stat-card"><span class="stat-icon" aria-hidden="true">🪙</span><span class="stat-label">GOLD SPENT</span><strong id="profile-gold-spent">0</strong></article>
+      </div>
+      <div class="profile-details">
+        <article class="story-card profile-insight">
+          <p class="scene-kicker">YOUR MOST COMMON STYLE</p>
+          <h2 id="profile-style">Your story is just beginning.</h2>
+          <p id="profile-style-description">Finish a journey to discover the patterns in your choices.</p>
+        </article>
+        <article class="story-card profile-history">
+          <div class="history-heading"><div><p class="scene-kicker">THE PATH SO FAR</p><h2>Recent journeys</h2></div><span id="profile-history-count">0 entries</span></div>
+          <p class="profile-empty" id="profile-empty">Your first adventure is waiting in the grove.</p>
+          <p class="profile-storage-status" id="profile-storage-status" role="status" hidden></p>
+          <ol class="journey-list" id="journey-list"></ol>
+        </article>
+      </div>
+      <div class="page-callout">
+        <div><p class="scene-kicker">THERE'S ALWAYS ANOTHER PATH</p><h2>Try a new beginning.</h2></div>
+        <a class="primary-button" href="#home"><span>Back to the grove</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+      </div>
     </section>
   </main>
   <audio id="intro-narration" preload="none"></audio>

@@ -6,6 +6,8 @@ A choose-your-own-adventure about money choices. Princess Rowan travels through 
 
 Open `index.html` in a browser. The game is plain HTML, CSS, and JavaScript; there is no build step. Each journey rolls a starting purse of 50, 75, 100, 150, or 200 gold. Choices affect gold, health, supplies, reputation, inventory, and the ending.
 
+Use the site menu to visit the About, Resources, and My Profile pages. Completed journey summaries are saved in local browser storage on the device you played on; they are not uploaded to a server.
+
 ## ElevenLabs narration
 
 The animated intro includes captions and looks for an ElevenLabs narration MP3. To create it:
