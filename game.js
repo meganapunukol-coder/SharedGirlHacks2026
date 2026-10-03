@@ -215,6 +215,12 @@ const book = document.querySelector(".book");
 const bookStage = document.querySelector("#book-stage");
 const bookCaption = document.querySelector("#book-caption");
 const beginButton = document.querySelector("#begin-button");
+const playerForm = document.querySelector("#player-form");
+const playerNameInput = document.querySelector("#player-name");
+const playerEmailInput = document.querySelector("#player-email");
+const introDeck = document.querySelector("#intro-deck");
+const aboutStoryCopy = document.querySelector("#about-story-copy");
+const artDescription = document.querySelector("#art-desc");
 const skipButton = document.querySelector("#skip-intro");
 const cinematicSkip = document.querySelector("#cinematic-skip");
 const sceneKicker = document.querySelector("#scene-kicker");
@@ -417,9 +423,23 @@ function resetGame() {
   state.gold = state.startingGold;
 }
 
+function personalize(text) {
+  const name = state.playerName || "Rowan";
+  return text.replace(/\bRowan\b/gi, (match) => match === match.toUpperCase() ? name.toUpperCase() : name);
+}
+
 function startCinematic() {
   if (gameStarted) return;
+  const playerName = playerNameInput.value.trim();
+  const playerEmail = playerEmailInput.value.trim();
+  playerNameInput.setCustomValidity(playerName ? "" : "Please enter your name.");
+  if (!playerForm.reportValidity() || !playerEmail) return;
   resetGame();
+  state.playerName = playerName;
+  state.playerEmail = playerEmail;
+  introDeck.textContent = `A prince is trapped in the Tower of Shadows. Princess ${playerName} must cross an enchanted forest, making hard choices with the resources she has.`;
+  aboutStoryCopy.textContent = `Follow Princess ${playerName} through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.`;
+  artDescription.textContent = `Princess ${playerName} follows a winding path through the Enchanted Forest toward the Tower of Shadows.`;
   book.classList.add("is-open");
   bookStage.classList.add("is-open");
   bookCaption.textContent = "Once upon a time...";
@@ -440,7 +460,7 @@ function startCinematic() {
   }, 9000));
   introTimers.push(window.setTimeout(() => {
     cinematicArt.className = "cinematic-art is-princess";
-    setCaption("MEET PRINCESS ROWAN", "She takes a breath, steps onto the path, and chooses to begin.");
+    setCaption("MEET PRINCESS ROWAN", "Rowan takes a breath, steps onto the path, and chooses to begin.");
   }, 12300));
   introTimers.push(window.setTimeout(() => {
     cinematicArt.className = "cinematic-art";
@@ -450,8 +470,8 @@ function startCinematic() {
 }
 
 function setCaption(kicker, line) {
-  cinematicKicker.textContent = kicker;
-  cinematicLine.textContent = line;
+  cinematicKicker.textContent = personalize(kicker);
+  cinematicLine.textContent = personalize(line);
 }
 
 function skipCinematic() {
@@ -489,7 +509,7 @@ function renderChapter() {
   sceneKicker.textContent = chapter.kicker;
   sceneTitle.textContent = chapter.title;
   sceneText.textContent = chapter.id === "tower" && state.towerFundsReleased
-    ? `${chapter.text} The bank releases your deposit with 10% interest; your gold total now includes it.` : chapter.text;
+    ? personalize(`${chapter.text} The bank releases your deposit with 10% interest; your gold total now includes it.`) : personalize(chapter.text);
   lessonText.textContent = chapter.lesson;
   choiceList.replaceChildren();
   feedback.hidden = true;
@@ -514,10 +534,10 @@ function renderChapter() {
     content.className = "choice-content";
     const label = document.createElement("span");
     label.className = "choice-label";
-    label.textContent = choice.label;
+    label.textContent = personalize(choice.label);
     const detail = document.createElement("span");
     detail.className = "choice-detail";
-    detail.textContent = choice.available ? choice.detail : choice.lockedMessage;
+    detail.textContent = personalize(choice.available ? choice.detail : choice.lockedMessage);
     content.append(label, detail);
     const arrow = document.createElement("span");
     arrow.className = "choice-arrow";
@@ -543,7 +563,7 @@ function selectChoice(choice, selectedButton) {
     button.querySelector(".choice-arrow").textContent = button === selectedButton ? "✓" : "";
   });
   renderResources();
-  feedbackText.textContent = response;
+  feedbackText.textContent = personalize(response);
   feedback.hidden = false;
   continueButton.textContent = state.ending ? "See your ending →" : "Continue the story →";
   continueButton.hidden = false;
@@ -573,11 +593,12 @@ function renderEnding() {
     community: ["THE COMMUNITY HERO", "The forest folk Rowan helped arrive together. Their trust opens the Tower and brings the prince home. Reputation and relationships had value on this road."],
     unfinished: ["THE JOURNEY CONTINUES", "The gate stays closed for now. Rowan reaches out to the forest folk and plans another route. A difficult outcome is a chance to reflect, not a judgment of the player."]
   };
-  const [endingTitle, endingText] = endings[state.ending] ?? endings.unfinished;
+  const [endingTitle, rawEndingText] = endings[state.ending] ?? endings.unfinished;
+  const endingText = personalize(rawEndingText);
   const profile = getFinancialProfile();
   saveCompletedJourney(profile);
   sceneKicker.textContent = "THE GROVE REMEMBERS";
-  sceneTitle.textContent = state.ending === "unfinished" ? "The Tower is not the end of Rowan's story." : "The prince is free. The story belongs to Rowan.";
+  sceneTitle.textContent = personalize(state.ending === "unfinished" ? "The Tower is not the end of Rowan's story." : "The prince is free. The story belongs to Rowan.");
   sceneText.textContent = endingText;
   lessonText.textContent = "There is no one perfect route. Notice what you valued, what surprised you, and what you might change next time.";
   choiceList.replaceChildren();
@@ -657,7 +678,7 @@ function rollDie() { return Math.floor(Math.random() * 6) + 1; }
 function playIntroNarration() {
   if (!soundOn) return;
   window.speechSynthesis?.cancel();
-  if (elevenLabsNarrationPath) {
+  if (elevenLabsNarrationPath && state.playerName === "Rowan") {
     narration.src = elevenLabsNarrationPath;
     narration.currentTime = 0;
     narration.play().catch(() => speakWithSystemVoice());
@@ -668,7 +689,7 @@ function playIntroNarration() {
 
 function speakWithSystemVoice() {
   if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
-  const utterance = new SpeechSynthesisUtterance(introNarrationScript);
+  const utterance = new SpeechSynthesisUtterance(personalize(introNarrationScript));
   utterance.rate = 0.88;
   utterance.pitch = 1.08;
   const preferredVoice = window.speechSynthesis.getVoices().find((voice) => /female|samantha|victoria|zira|aria|jenny|ava/i.test(voice.name));
@@ -676,7 +697,11 @@ function speakWithSystemVoice() {
   window.speechSynthesis.speak(utterance);
 }
 
-beginButton.addEventListener("click", startCinematic);
+playerForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  startCinematic();
+});
+playerNameInput.addEventListener("input", () => playerNameInput.setCustomValidity(""));
 skipButton.addEventListener("click", startCinematic);
 cinematicSkip.addEventListener("click", skipCinematic);
 continueButton.addEventListener("click", advanceStory);

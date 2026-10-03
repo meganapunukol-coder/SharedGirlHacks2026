@@ -37,10 +37,17 @@
       <div class="intro-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> A CHOOSE-YOUR-OWN-ADVENTURE</p>
         <h1 id="intro-title">The Enchanted<br><em>Grove</em></h1>
-        <p class="intro-deck">A prince is trapped in the Tower of Shadows. Princess Rowan must cross an enchanted forest, making hard choices with the resources she has.</p>
-        <button class="primary-button" id="begin-button" type="button">
-          <span>Open the story</span><span class="button-arrow" aria-hidden="true">↗</span>
-        </button>
+        <p class="intro-deck" id="intro-deck">A prince is trapped in the Tower of Shadows. The princess must cross an enchanted forest, making hard choices with the resources she has.</p>
+        <form class="player-form" id="player-form">
+          <label for="player-name">Your name</label>
+          <input id="player-name" name="name" type="text" autocomplete="name" maxlength="40" required>
+          <label for="player-email">Your email</label>
+          <input id="player-email" name="email" type="email" autocomplete="email" required>
+          <p class="form-privacy">Your details stay in this browser session and are not sent anywhere.</p>
+          <button class="primary-button" id="begin-button" type="submit">
+            <span>Open the story</span><span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+        </form>
         <p class="intro-footnote">Every journey begins with a different purse.</p>
       </div>
 
@@ -104,7 +111,7 @@
         <div class="scene-art" aria-label="Illustration of an enchanted forest at twilight">
           <svg class="grove-art" id="grove-art" viewBox="0 0 640 520" role="img" aria-labelledby="art-title art-desc" xmlns="http://www.w3.org/2000/svg">
             <title id="art-title">The Enchanted Grove</title>
-            <desc id="art-desc">Princess Rowan follows a winding path through the Enchanted Forest toward the Tower of Shadows.</desc>
+            <desc id="art-desc">The princess follows a winding path through the Enchanted Forest toward the Tower of Shadows.</desc>
             <defs>
               <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#183a37"/><stop offset="1" stop-color="#62856b"/></linearGradient>
               <linearGradient id="path" x1="0" x2="1"><stop stop-color="#b7a56f"/><stop offset="1" stop-color="#e7d69a"/></linearGradient>
@@ -172,7 +179,7 @@
           <span class="card-ornament" aria-hidden="true">✳</span>
           <p class="scene-kicker">OUR PURPOSE</p>
           <h2>Learn by living the story.</h2>
-          <p>Follow Princess Rowan through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.</p>
+          <p id="about-story-copy">Follow the princess through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.</p>
         </article>
         <article class="story-card about-card about-card-accent">
           <span class="card-ornament" aria-hidden="true">✦</span>
