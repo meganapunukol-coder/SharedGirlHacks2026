@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17382f">
-  <meta name="description" content="A storybook adventure through the Enchanted Grove, where thoughtful money choices help a princess rescue a prince.">
-  <title>The Enchanted Grove</title>
+  <meta name="description" content="Into the Unknown is a storybook adventure where thoughtful money choices help a princess rescue a prince.">
+  <title>Into the Unknown</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="preload" as="image" href="assets/forest-background.jpg">
@@ -21,16 +21,16 @@
   <div class="forest-backdrop" aria-hidden="true"></div>
   <canvas class="sparkle-canvas" id="sparkle-canvas" aria-hidden="true"></canvas>
   <header class="topbar">
-    <a class="wordmark" href="#home" aria-label="The Enchanted Grove home">
+    <a class="wordmark" href="#home" aria-label="Into the Unknown home">
       <img class="wordmark-mark" src="assets/logo-128.png" alt="" width="40" height="40">
       <span>GROVE<span class="wordmark-light"> / STORIES</span></span>
     </a>
     <div class="topbar-right">
       <nav class="primary-nav" aria-label="Main menu">
-        <a class="nav-link is-active" href="#home" aria-current="page">Home</a>
+        <a class="nav-link is-active" href="#home" aria-current="page">The Grove</a>
         <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#resources">Resources</a>
-        <a class="nav-link" href="#profile">My profile</a>
+        <a class="nav-link" href="#profile">My Profile</a>
       </nav>
       <button class="sound-button" id="sound-toggle" type="button" aria-pressed="true" aria-label="Turn narration off">
         <span aria-hidden="true">♫</span><span id="sound-label">Narration on</span>
@@ -43,7 +43,7 @@
     <section class="intro" id="intro" aria-labelledby="intro-title">
       <div class="intro-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> A CHOOSE-YOUR-OWN-ADVENTURE</p>
-        <h1 id="intro-title">The Enchanted<br><em>Grove</em></h1>
+        <h1 id="intro-title"><em>Into the Unknown</em></h1>
         <p class="intro-deck" id="intro-deck">A prince is trapped in the Tower of Shadows. The princess must cross an enchanted forest, making hard choices with the resources she has.</p>
         <form class="player-form" id="player-form">
           <label for="player-name">Your name</label>
@@ -72,7 +72,7 @@
           </div>
           <div class="book-cover">
             <span class="cover-corner cover-corner-top" aria-hidden="true">✧</span>
-            <span class="cover-title">The<br>Enchanted<br><i>Grove</i></span>
+            <span class="cover-title">Into the<br><i>Unknown</i></span>
             <span class="cover-rule" aria-hidden="true"></span>
             <span class="cover-subtitle">A TALE OF COURAGE & COINS</span>
             <img class="cover-flower" src="assets/logo-128.png" alt="" aria-hidden="true" width="46" height="46">
@@ -85,7 +85,7 @@
     </section>
 
     <section class="cinematic" id="cinematic" role="dialog" aria-label="Storybook introduction" aria-modal="true" tabindex="-1" hidden>
-      <a class="cinematic-home" href="#home">← Home</a>
+      <a class="cinematic-home" href="#home">← The Grove</a>
       <div class="cinematic-scene">
         <div class="cinematic-art" id="cinematic-art" aria-hidden="true"></div>
         <div class="cinematic-vignette" aria-hidden="true"></div>
@@ -129,7 +129,7 @@
       <div class="adventure-grid">
         <div class="scene-art" aria-label="Illustration of an enchanted forest at twilight">
           <svg class="grove-art" id="grove-art" viewBox="0 0 640 520" role="img" aria-labelledby="art-title art-desc" xmlns="http://www.w3.org/2000/svg">
-            <title id="art-title">The Enchanted Grove</title>
+            <title id="art-title">Into the Unknown</title>
             <desc id="art-desc">The princess follows a winding path through the Enchanted Forest toward the Tower of Shadows.</desc>
             <defs>
               <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#183a37"/><stop offset="1" stop-color="#62856b"/></linearGradient>
@@ -190,8 +190,8 @@
     <section class="site-page interior-page" id="about-page" data-page="about" aria-labelledby="about-title" hidden>
       <div class="page-heading">
         <p class="eyebrow"><span class="eyebrow-line"></span> A LITTLE ABOUT OUR WORLD</p>
-        <h1 id="about-title">Stories make room<br>for <em>possibility.</em></h1>
-        <p class="page-deck">The Enchanted Grove is a choose-your-own-adventure about the everyday choices that shape our lives—and the many ways a story can unfold.</p>
+        <h1 id="about-title">Learn about<br><em>how you live.</em></h1>
+        <p class="page-deck">Into the Unknown is a choose-your-own-adventure about the everyday choices that shape our lives—and the many ways a story can unfold.</p>
       </div>
       <div class="about-grid">
         <article class="story-card about-card">
@@ -202,9 +202,19 @@
         </article>
         <article class="story-card about-card about-card-accent">
           <span class="card-ornament" aria-hidden="true">✦</span>
-          <p class="scene-kicker">OUR PROMISE</p>
-          <h2>Your path is your own.</h2>
-          <p>There is no single perfect way through the grove. Different resources create different possibilities, and a detour is still part of the adventure. This is a space for curiosity, reflection, and trying again.</p>
+          <p class="scene-kicker">THE CREATORS</p>
+          <h2>Meet the creators.</h2>
+          <div class="creator-details">
+            <div class="creator-photo-placeholder" role="img" aria-label="Placeholder for a photo of the creators">
+              <span>Team photo<br>coming soon</span>
+            </div>
+            <ul class="creator-names" aria-label="Creators">
+              <li>Megana</li>
+              <li>Amulya</li>
+              <li>Hannah</li>
+              <li>Bhuvaneshwari</li>
+            </ul>
+          </div>
         </article>
       </div>
       <div class="page-callout">
