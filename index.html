@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17382f">
+  <meta name="description" content="A storybook adventure through the Enchanted Grove, where thoughtful money choices help a princess rescue a prince.">
+  <title>The Enchanted Grove</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#home" aria-label="The Enchanted Grove home">
+      <span class="wordmark-mark" aria-hidden="true">✳</span>
+      <span>GROVE<span class="wordmark-light"> / STORIES</span></span>
+    </a>
+    <div class="topbar-right">
+      <span class="chapter-label">A STORY ABOUT CHOICES</span>
+      <button class="sound-button" id="sound-toggle" type="button" aria-pressed="true" aria-label="Turn narration off">
+        <span aria-hidden="true">♫</span><span id="sound-label">Narration on</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="intro" id="intro" aria-labelledby="intro-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> A CHOOSE-YOUR-OWN-ADVENTURE</p>
+        <h1 id="intro-title">The Enchanted<br><em>Grove</em></h1>
+        <p class="intro-deck">A prince is trapped in the Tower of Shadows. Princess Rowan must cross an enchanted forest, making hard choices with the resources she has.</p>
+        <button class="primary-button" id="begin-button" type="button">
+          <span>Open the story</span><span class="button-arrow" aria-hidden="true">↗</span>
+        </button>
+        <p class="intro-footnote">Every journey begins with a different purse.</p>
+      </div>
+
+      <div class="book-stage" id="book-stage" aria-label="An illustrated storybook opening to reveal the first line of a fairy tale">
+        <div class="book-glow" aria-hidden="true"></div>
+        <div class="book">
+          <div class="book-pages" aria-hidden="true"></div>
+          <div class="book-left-page">
+            <span class="page-ornament" aria-hidden="true">✳</span>
+            <span class="page-number">I</span>
+          </div>
+          <div class="book-right-page" aria-hidden="true">
+            <span class="page-story">Once upon<br> a time...</span>
+            <span class="page-sparkle">✦</span>
+          </div>
+          <div class="book-cover">
+            <span class="cover-corner cover-corner-top" aria-hidden="true">✧</span>
+            <span class="cover-title">The<br>Enchanted<br><i>Grove</i></span>
+            <span class="cover-rule" aria-hidden="true"></span>
+            <span class="cover-subtitle">A TALE OF COURAGE & COINS</span>
+            <span class="cover-flower" aria-hidden="true">✳</span>
+            <span class="cover-corner cover-corner-bottom" aria-hidden="true">✧</span>
+          </div>
+        </div>
+        <p class="book-caption" id="book-caption">A new tale is waiting</p>
+        <button class="skip-button" id="skip-intro" type="button">Skip intro <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="intro-bottom"><span>01</span><span class="intro-bottom-rule"></span><span>THE FIRST PAGE</span></div>
+    </section>
+
+    <section class="cinematic" id="cinematic" role="dialog" aria-label="Storybook introduction" aria-modal="true" tabindex="-1" hidden>
+      <div class="cinematic-scene">
+        <div class="cinematic-art" id="cinematic-art" aria-hidden="true"></div>
+        <div class="cinematic-vignette" aria-hidden="true"></div>
+        <div class="cinematic-caption" aria-live="polite" aria-atomic="true">
+          <span class="cinematic-kicker" id="cinematic-kicker">ONCE UPON A TIME</span>
+          <p id="cinematic-line">In a grove beneath an ancient moon...</p>
+        </div>
+      </div>
+      <button class="cinematic-skip" id="cinematic-skip" type="button">Skip story <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section class="adventure" id="adventure" aria-labelledby="scene-title" hidden>
+      <div class="adventure-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> YOUR STORY, YOUR CALL</p>
+        <div class="progress-wrap" aria-label="Adventure progress">
+          <span class="progress-label" id="progress-label">THE BEGINNING</span>
+          <div class="progress-track"><span class="progress-fill" id="progress-fill"></span></div>
+          <span class="progress-count" id="progress-count">01 / 09</span>
+        </div>
+      </div>
+
+      <div class="resource-strip" aria-label="Your resources">
+        <div class="resource"><span class="resource-icon" aria-hidden="true">🪙</span><span class="resource-name">GOLD</span><strong id="gold-value">--</strong></div>
+        <div class="resource"><span class="resource-icon" aria-hidden="true">❤️</span><span class="resource-name">HEALTH</span><strong id="health-value">100 / 100</strong></div>
+        <div class="resource"><span class="resource-icon" aria-hidden="true">🎒</span><span class="resource-name">SUPPLIES</span><strong id="supplies-value">0 / 3</strong></div>
+        <div class="resource"><span class="resource-icon" aria-hidden="true">⭐</span><span class="resource-name">REPUTATION</span><strong id="reputation-value">0</strong></div>
+      </div>
+
+      <div class="adventure-grid">
+        <div class="scene-art" aria-label="Illustration of an enchanted forest at twilight">
+          <svg class="grove-art" id="grove-art" viewBox="0 0 640 520" role="img" aria-labelledby="art-title art-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="art-title">The Enchanted Grove</title>
+            <desc id="art-desc">Princess Rowan follows a winding path through the Enchanted Forest toward the Tower of Shadows.</desc>
+            <defs>
+              <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#183a37"/><stop offset="1" stop-color="#62856b"/></linearGradient>
+              <linearGradient id="path" x1="0" x2="1"><stop stop-color="#b7a56f"/><stop offset="1" stop-color="#e7d69a"/></linearGradient>
+              <linearGradient id="cape" x1="0" x2="1"><stop stop-color="#d8644e"/><stop offset="1" stop-color="#a73f3c"/></linearGradient>
+            </defs>
+            <rect width="640" height="520" fill="url(#sky)"/>
+            <circle cx="475" cy="95" r="44" fill="#f2d892" opacity=".92"/>
+            <circle cx="491" cy="82" r="39" fill="#24433d"/>
+            <g fill="#f7df9a" opacity=".86"><circle cx="101" cy="77" r="2"/><circle cx="174" cy="133" r="2"/><circle cx="338" cy="56" r="2.5"/><circle cx="551" cy="177" r="2"/><circle cx="411" cy="163" r="1.7"/><circle cx="69" cy="202" r="1.7"/></g>
+            <path d="M0 319Q80 255 168 313t168-5q77-70 162 7t142-8v213H0Z" fill="#264d3e"/>
+            <path d="M0 378q94-84 180-27t161-18q103-65 181 18t118-8v177H0Z" fill="#17392f"/>
+            <g fill="#102e29">
+              <path d="M29 365V129h21v236zM-12 196q49-95 98 0-49-16-98 0zM-2 250q51-105 102 0-51-16-102 0zM13 143q27-68 55 0-28-11-55 0z"/>
+              <path d="M550 372V115h22v257zM508 194q53-111 106 0-53-18-106 0zM514 255q53-105 106 0-53-15-106 0zM522 140q39-83 78 0-39-13-78 0z"/>
+              <path d="M117 351V200h15v151zM85 245q39-78 78 0-39-13-78 0zM526 348V226h14v122zM496 267q37-73 74 0-37-13-74 0z"/>
+            </g>
+            <g fill="#d8ca9c" opacity=".86"><path d="M285 228h65v93h-65z"/><path d="M276 228l42-40 42 40z"/><path d="M296 193v-22h13v22zM326 193v-22h13v22z"/><path d="M309 273h17v48h-17z" fill="#536c53"/><rect x="295" y="245" width="11" height="15" rx="5" fill="#536c53"/><rect x="331" y="245" width="11" height="15" rx="5" fill="#536c53"/></g>
+            <path d="M315 518q-23-92-7-143 13-39-17-76h51q-28 38-8 76 23 56 21 143z" fill="url(#path)" opacity=".9"/>
+            <g transform="translate(240 336)">
+              <ellipse cx="35" cy="111" rx="32" ry="7" fill="#102d27" opacity=".45"/>
+              <path d="M30 55Q6 79 4 110q22 6 51-4L44 54z" fill="url(#cape)"/>
+              <path d="M26 50q9-11 21 0l8 48H23z" fill="#e5bd86"/>
+              <path d="M23 43q1-23 19-23t21 23L51 57H27z" fill="#d7a369"/>
+              <circle cx="43" cy="32" r="15" fill="#c87953"/>
+              <path d="M28 33q-3-24 17-24 17 1 17 20-10-6-14-17-8 12-20 13z" fill="#302a2a"/>
+              <path d="M55 23q23 3 13 23-7-11-13-23z" fill="#e1bd72"/>
+              <path d="M29 97l-5 20m29-20 3 20" stroke="#292d27" stroke-width="5" stroke-linecap="round"/>
+              <path d="M27 58 9 75m39-16 18 10" stroke="#c87953" stroke-width="6" stroke-linecap="round"/>
+              <path d="M68 80V43m-8 11 8-11 9 11" fill="none" stroke="#d8bd75" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="68" cy="39" r="6" fill="#f4df9e"/>
+            </g>
+            <g fill="#f2d98f"><circle cx="191" cy="393" r="3"/><circle cx="425" cy="358" r="3"/><circle cx="464" cy="407" r="2.5"/><circle cx="152" cy="441" r="2"/><circle cx="385" cy="460" r="3"/></g>
+            <g fill="#e98565"><path d="M88 408q9-20 18 0v9H88z"/><path d="M75 420q13-24 26 0v10H75z"/><path d="M518 440q10-21 20 0v9h-20z"/></g>
+            <path d="M0 482q87-41 167-5t154 4q90-42 176-4t143-7v50H0z" fill="#102e29"/>
+          </svg>
+          <div class="art-note"><span class="art-note-mark" aria-hidden="true">✦</span><span>Somewhere beyond the trees,<br>someone is waiting.</span></div>
+        </div>
+
+        <div class="story-panel" aria-live="polite" aria-atomic="true">
+          <p class="scene-kicker" id="scene-kicker">A KNOCK AT THE GATE</p>
+          <h2 id="scene-title" tabindex="-1">The grove has a way of listening.</h2>
+          <p class="scene-text" id="scene-text"></p>
+          <aside class="lesson-box"><span class="lesson-label">MONEY IDEA</span><p id="lesson-text"></p></aside>
+          <div class="choice-list" id="choice-list"></div>
+          <div class="feedback" id="feedback" hidden>
+            <span class="feedback-symbol" aria-hidden="true">✳</span>
+            <p id="feedback-text"></p>
+          </div>
+          <button class="continue-button" id="continue-button" type="button" hidden>Continue the story <span aria-hidden="true">→</span></button>
+          <div class="story-footer"><span id="chapter-note">Your starting gold is rolled at the beginning.</span><span class="footer-divider"></span><span>YOUR CHOICES SHAPE THE TALE</span></div>
+        </div>
+      </div>
+      <p class="game-note">A story for learning and reflection, not personal financial advice.</p>
+    </section>
+  </main>
+  <audio id="intro-narration" preload="none"></audio>
+  <footer class="site-footer"><span>MADE FOR CURIOUS MINDS</span><span>✳</span><span>THE GROVE GROWS WITH EVERY CHOICE</span></footer>
+</body>
+</html>
