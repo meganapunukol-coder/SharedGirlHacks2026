@@ -6,16 +6,23 @@
   <meta name="theme-color" content="#17382f">
   <meta name="description" content="A storybook adventure through the Enchanted Grove, where thoughtful money choices help a princess rescue a prince.">
   <title>The Enchanted Grove</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="preload" as="image" href="assets/forest-background.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="game.js" defer></script>
+  <script src="assets/sparkles-data.js" defer></script>
+  <script src="sparkles.js" defer></script>
 </head>
 <body>
+  <div class="forest-backdrop" aria-hidden="true"></div>
+  <canvas class="sparkle-canvas" id="sparkle-canvas" aria-hidden="true"></canvas>
   <header class="topbar">
     <a class="wordmark" href="#home" aria-label="The Enchanted Grove home">
-      <span class="wordmark-mark" aria-hidden="true">✳</span>
+      <img class="wordmark-mark" src="assets/logo-128.png" alt="" width="40" height="40">
       <span>GROVE<span class="wordmark-light"> / STORIES</span></span>
     </a>
     <div class="topbar-right">
@@ -68,7 +75,7 @@
             <span class="cover-title">The<br>Enchanted<br><i>Grove</i></span>
             <span class="cover-rule" aria-hidden="true"></span>
             <span class="cover-subtitle">A TALE OF COURAGE & COINS</span>
-            <span class="cover-flower" aria-hidden="true">✳</span>
+            <img class="cover-flower" src="assets/logo-128.png" alt="" aria-hidden="true" width="46" height="46">
             <span class="cover-corner cover-corner-bottom" aria-hidden="true">✧</span>
           </div>
         </div>

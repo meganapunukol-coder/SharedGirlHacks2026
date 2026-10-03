@@ -18,12 +18,20 @@
 * { box-sizing: border-box; }
 
 body {
+  position: relative;
   min-width: 320px;
   margin: 0;
   color: var(--paper-light);
   background-color: var(--forest-deep);
-  background-image: radial-gradient(ellipse at 50% -30%, #345a43 0, transparent 55%), repeating-linear-gradient(115deg, transparent 0 48px, rgb(255 255 255 / 1.4%) 49px, transparent 50px);
 }
+
+/* Enchanted forest backdrop shared by every page; a fixed layer (not background-attachment) so it also stays put on mobile. */
+/* Layers: painting (-3), readability shade (-2), interactive sparkles from sparkles.js (-1). */
+.forest-backdrop, .sparkle-canvas, body::after { position: fixed; inset: 0; pointer-events: none; }
+.forest-backdrop, .sparkle-canvas { transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0) scale(1.04); will-change: transform; }
+.forest-backdrop { z-index: -3; background: var(--forest-deep) url("assets/forest-background.jpg") center / cover no-repeat; }
+.sparkle-canvas { z-index: -1; display: block; width: 100%; height: 100%; }
+body::after { z-index: -2; content: ""; background: radial-gradient(ellipse at 50% 38%, transparent 0, rgb(12 29 22 / 23%) 56%, rgb(9 22 17 / 68%) 100%), linear-gradient(180deg, rgb(12 29 22 / 49%) 0, rgb(12 29 22 / 12%) 25%, rgb(12 29 22 / 23%) 75%, rgb(9 22 17 / 68%) 100%); }
 
 button, a { font: inherit; }
 button { color: inherit; }
@@ -40,7 +48,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #f1d487; outline-offs
 }
 
 .wordmark { display: inline-flex; align-items: center; gap: 10px; color: var(--paper-light); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .13em; }
-.wordmark-mark { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); font-size: 16px; }
+.wordmark-mark { display: block; width: 40px; height: 40px; border: 1px solid rgb(217 182 109 / 70%); border-radius: 50%; object-fit: cover; box-shadow: 0 0 14px rgb(217 182 109 / 22%); }
 .wordmark-light { color: #b4c3ad; font-weight: 500; }
 .topbar-right { display: flex; align-items: center; gap: 28px; }
 .primary-nav { display: flex; align-items: center; gap: 5px; }
@@ -97,7 +105,7 @@ h1 em { color: #d8be7c; font-weight: 500; }
 .cover-title i { color: #eccb83; font-weight: 500; }
 .cover-rule { z-index: 1; width: 42px; height: 1px; margin: 15px 0 10px; background: #e7ca87; }
 .cover-subtitle { z-index: 1; color: #f1dcae; font-size: 6px; }
-.cover-flower { z-index: 1; margin-top: 14px; color: #e7ca87; font-size: 22px; }
+.cover-flower { z-index: 1; width: 46px; height: 46px; margin-top: 14px; border: 1px solid #e7ca87; border-radius: 50%; object-fit: cover; }
 .cover-corner { position: absolute; z-index: 1; color: #e7ca87; font-size: 15px; }
 .cover-corner-top { top: 26px; left: 27px; }
 .cover-corner-bottom { right: 27px; bottom: 26px; }
@@ -190,7 +198,7 @@ h2 { margin: 0; color: var(--forest); font-size: clamp(29px, 3vw, 39px); line-he
 .page-heading h1 em { color: #d8be7c; }
 .page-deck { max-width: 580px; margin: 20px auto 0; color: #c2cdbd; font-size: 14px; line-height: 1.8; }
 .about-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.story-card { position: relative; overflow: hidden; border: 1px solid rgb(229 216 175 / 15%); border-radius: 5px; background: linear-gradient(145deg, rgb(38 70 54 / 91%), rgb(20 48 40 / 94%)); box-shadow: 0 17px 45px rgb(0 0 0 / 13%); }
+.story-card { position: relative; overflow: hidden; border: 1px solid rgb(229 216 175 / 15%); border-radius: 5px; background: linear-gradient(145deg, rgb(38 70 54 / 78%), rgb(20 48 40 / 86%)); box-shadow: 0 17px 45px rgb(0 0 0 / 22%); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .about-card { min-height: 240px; padding: 34px; }
 .about-card-accent { background: linear-gradient(145deg, rgb(70 55 49 / 72%), rgb(32 48 40 / 96%)); }
 .card-ornament { position: absolute; top: 20px; right: 25px; color: rgb(217 182 109 / 36%); font-size: 36px; }
@@ -215,7 +223,7 @@ h2 { margin: 0; color: var(--forest); font-size: clamp(29px, 3vw, 39px); line-he
 .continue-profile-link { color: #e6c977; font-size: 11px; text-decoration: none; white-space: nowrap; }
 .continue-profile-link:hover { color: var(--paper); }
 .profile-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.stat-card { display: grid; min-height: 125px; align-content: center; gap: 7px; padding: 18px; border: 1px solid rgb(229 216 175 / 15%); border-radius: 5px; background: linear-gradient(145deg, rgb(38 70 54 / 91%), rgb(20 48 40 / 94%)); }
+.stat-card { display: grid; min-height: 125px; align-content: center; gap: 7px; padding: 18px; border: 1px solid rgb(229 216 175 / 15%); border-radius: 5px; background: linear-gradient(145deg, rgb(38 70 54 / 78%), rgb(20 48 40 / 86%)); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .stat-icon { font-size: 17px; }
 .stat-label { color: #b8c5b3; font-size: 7px; font-weight: 700; letter-spacing: .14em; }
 .stat-card strong { color: var(--paper); font-family: Fraunces, Georgia, serif; font-size: 27px; font-weight: 500; }
@@ -289,7 +297,7 @@ h2 { margin: 0; color: var(--forest); font-size: clamp(29px, 3vw, 39px); line-he
 @media (max-width: 380px) {
   .sound-button { padding: 8px; }
   .wordmark { gap: 7px; font-size: 10px; }
-  .wordmark-mark { width: 25px; height: 25px; }
+  .wordmark-mark { width: 32px; height: 32px; }
   .nav-link { padding: 7px 8px; font-size: 10px; }
   .book { height: 255px; }
   .cover-title { font-size: 24px; }
