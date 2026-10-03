@@ -80,20 +80,32 @@
           </div>
         </div>
         <p class="book-caption" id="book-caption">A new tale is waiting</p>
-        <button class="skip-button" id="skip-intro" type="button">Skip intro <span aria-hidden="true">↗</span></button>
       </div>
       <div class="intro-bottom"><span>01</span><span class="intro-bottom-rule"></span><span>THE FIRST PAGE</span></div>
     </section>
 
     <section class="cinematic" id="cinematic" role="dialog" aria-label="Storybook introduction" aria-modal="true" tabindex="-1" hidden>
+      <a class="cinematic-home" href="#home">← Home</a>
       <div class="cinematic-scene">
         <div class="cinematic-art" id="cinematic-art" aria-hidden="true"></div>
         <div class="cinematic-vignette" aria-hidden="true"></div>
         <div class="cinematic-caption" aria-live="polite" aria-atomic="true">
-          <span class="cinematic-kicker" id="cinematic-kicker">ONCE UPON A TIME</span>
-          <p id="cinematic-line">In a grove beneath an ancient moon...</p>
+          <span class="cinematic-kicker" id="cinematic-kicker">THE ENCHANTED FOREST</span>
+          <p id="cinematic-line">The story will begin when the narration starts.</p>
         </div>
       </div>
+      <aside class="cinematic-reader" aria-label="Story transcript">
+        <div class="cinematic-reader-heading">
+          <div>
+            <span class="cinematic-reader-kicker">YOUR STORY</span>
+            <h2>The Enchanted Forest</h2>
+          </div>
+          <span class="starting-gold-badge" id="intro-gold">Your starting gold: —</span>
+        </div>
+        <p class="transcript-sync-note">Follow along as the attached narration reads this story.</p>
+        <div class="story-transcript" id="story-transcript" aria-live="off"></div>
+        <p class="cinematic-audio-status" id="cinematic-audio-status" role="status" hidden></p>
+      </aside>
       <button class="cinematic-skip" id="cinematic-skip" type="button">Skip story <span aria-hidden="true">↗</span></button>
     </section>
 

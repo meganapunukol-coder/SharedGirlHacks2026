@@ -1,23 +1,117 @@
 const startingGoldOptions = [50, 75, 100, 150, 200];
-const elevenLabsNarrationPath = null;
-const introNarrationScript = "Once upon a time, beneath the moonlit branches of the Enchanted Grove, a prince was trapped in a tower at the forest's far end. His lantern flickered like a distant star. Back at the grove's entrance, Princess Rowan took a breath and stepped onto the path. She could not choose the purse she carried, but she could choose how to use it. Her adventure begins now.";
+const introNarrationPath = "assets/audio/enchanted-grove-intro.mp3";
+const introStory = [
+  { type: "paragraph", text: "The first thing you hear is the wind." },
+  { type: "paragraph", text: "Not an ordinary wind." },
+  { type: "paragraph", text: "It whispers your name." },
+  { type: "paragraph", text: "You stand at the edge of the Enchanted Forest, your cloak pulled tightly around you as silver leaves dance across the ground. Behind you, the kingdom of Evermere glows beneath the setting sun. Ahead of you, the forest stretches farther than the eye can see." },
+  { type: "paragraph", text: "Somewhere beyond those trees is a tower." },
+  { type: "paragraph", text: "And inside that tower is your prince." },
+  { type: "paragraph", text: "Three days ago, he was taken by a mysterious sorcerer and carried deep into the forest. No knight has returned from the search. No map shows where the tower stands." },
+  { type: "paragraph", text: "So you have decided to go yourself." },
+  { type: "paragraph", text: "You reach down and touch the sword at your side." },
+  { type: "paragraph", text: "Then you feel the weight of something else." },
+  { type: "paragraph", text: "A small leather pouch." },
+  { type: "paragraph", text: "You untie it." },
+  { type: "paragraph", text: "You open it." },
+  { type: "paragraph", text: "And suddenly, your heart sinks." },
+  { type: "paragraph", text: "This is all the gold you have." },
+  { type: "paragraph", text: "You pour the coins into your palm and count them carefully." },
+  { type: "paragraph", text: "Your starting gold is shown on the screen." },
+  { type: "paragraph", text: "You stare at the coins." },
+  { type: "paragraph", text: "Will it be enough?" },
+  { type: "paragraph", text: "You have no idea." },
+  { type: "paragraph", text: "A voice suddenly speaks behind you." },
+  { type: "quote", text: "Princess." },
+  { type: "paragraph", text: "You turn." },
+  { type: "paragraph", text: "An old woman is standing beneath an ancient oak tree. You could swear she wasn't there a moment ago." },
+  { type: "paragraph", text: "She wears a cloak covered in tiny silver stars." },
+  { type: "quote", text: "The forest will test you," },
+  { type: "quote", text: "Not with swords." },
+  { type: "paragraph", text: "She points toward your pouch." },
+  { type: "quote", text: "With choices." },
+  { type: "paragraph", text: "You glance down at your gold." },
+  { type: "paragraph", text: "The woman continues." },
+  { type: "quote", text: "You will find things you need." },
+  { type: "paragraph", text: "She raises one finger." },
+  { type: "quote", text: "You will find things you want." },
+  { type: "paragraph", text: "A second finger." },
+  { type: "quote", text: "You will find opportunities to make your fortune." },
+  { type: "paragraph", text: "A third." },
+  { type: "quote", text: "And you will find dangers you never planned for." },
+  { type: "paragraph", text: "She steps closer." },
+  { type: "quote", text: "Spend everything, and you may find yourself helpless when trouble comes. Save everything, and you may miss the opportunities that could carry you forward." },
+  { type: "paragraph", text: "She smiles." },
+  { type: "quote", text: "The forest does not reward the richest traveler." },
+  { type: "paragraph", text: "She pauses." },
+  { type: "quote", text: "It rewards the wisest one." },
+  { type: "paragraph", text: "Suddenly, the trees ahead begin to move." },
+  { type: "paragraph", text: "Branches twist." },
+  { type: "paragraph", text: "Roots pull themselves from the earth." },
+  { type: "paragraph", text: "And three paths slowly reveal themselves." },
+  { type: "trail", icon: "🌲", title: "THE MERCHANT'S TRAIL", lines: [
+    "A warm golden glow shines between the trees.",
+    "You can hear music, laughter, and the clinking of coins. Colorful signs hang from the branches:",
+    "MAGICAL BARGAINS!",
+    "RARE TREASURES!",
+    "ONE DAY ONLY!",
+    "The path smells like fresh bread and cinnamon.",
+    "It looks safe.",
+    "It also looks expensive."
+  ] },
+  { type: "trail", icon: "🔮", title: "THE MYSTIC'S TRAIL", lines: [
+    "Blue mist curls along the ground.",
+    "Strange symbols glow on the trees, and somewhere beyond the fog, you hear the sound of bells.",
+    "A crystal palace seems to appear and disappear between the branches.",
+    "A wooden sign reads:",
+    "FORTUNE • SAVINGS • INVESTMENTS • RISK",
+    "You aren't entirely sure what any of that means."
+  ] },
+  { type: "trail", icon: "🐉", title: "THE WARRIOR'S TRAIL", lines: [
+    "The third path is darker.",
+    "Much darker.",
+    "Broken shields hang from the branches. Deep footprints disappear into the mud. Somewhere far ahead, something lets out a roar that makes the ground tremble beneath your boots.",
+    "But you also see a wooden sign:",
+    "QUESTS AVAILABLE",
+    "GOLD TO BE EARNED",
+    "DANGERS AHEAD",
+    "You grip your sword.",
+    "Perhaps this path won't require you to spend your gold.",
+    "Perhaps it will require you to earn more."
+  ] },
+  { type: "paragraph", text: "The old woman steps backward into the shadows." },
+  { type: "quote", text: "Choose carefully, Princess." },
+  { type: "paragraph", text: "You look at the three paths." },
+  { type: "paragraph", text: "Your prince is waiting." },
+  { type: "paragraph", text: "Your gold is limited." },
+  { type: "paragraph", text: "And once you enter the forest..." },
+  { type: "paragraph", text: "there is no turning back." },
+  { type: "paragraph", text: "Which path will you take?" },
+  { type: "choice-intro", icon: "🌲", text: "1 — The Merchant's Trail" },
+  { type: "paragraph", text: "Explore the marketplace and learn when to spend, save, and distinguish what you need from what you want." },
+  { type: "choice-intro", icon: "🔮", text: "2 — The Mystic's Trail" },
+  { type: "paragraph", text: "Enter the world of savings, investing, interest, risk, and growing your gold." },
+  { type: "choice-intro", icon: "🐉", text: "3 — The Warrior's Trail" },
+  { type: "paragraph", text: "Take on quests, earn gold, face emergencies, and discover the consequences of borrowing and debt." },
+  { type: "paragraph", text: "Choose your path." }
+];
 const chapters = [
   {
-    id: "gate", kicker: "CHAPTER 1 · THE FOREST GATE", title: "Five days to the Tower of Shadows.",
-    text: "A warning is carved into the gate: travelers who enter unprepared rarely make it out. Three merchants wait beside the path. Rowan has a different purse each time she begins a journey.",
-    lesson: "Needs, wants, and budgeting",
+    id: "gate", kicker: "CHAPTER 1 · THE THREE TRAILS", title: "Which path will you take?",
+    text: "The old woman's warning lingers as the three trails open before you. Your prince is waiting, and the gold in your pouch is limited.",
+    lesson: "Needs, wants, saving, investing, risk, and earning",
     choices: () => [
-      option("Buy a large backpack", "30 gold · +2 supply capacity", (game) => {
-        spend(game, 30); game.capacity += 2; game.items.add("backpack"); game.purchases += 1;
-        return "The pack can carry more later. It costs a lot up front, so Rowan has less gold for the road.";
-      }, (game) => game.gold >= 30, "Needs 30 gold."),
-      option("Buy basic supplies", "15 gold · +3 supplies", (game) => {
-        spend(game, 15); addSupplies(game, 3); game.purchases += 1; game.essentialPurchases += 1;
-        return "Food, water, and a blanket make the first night easier. Rowan spends less than she would on the backpack.";
-      }, (game) => game.gold >= 15, "Needs 15 gold."),
-      option("Buy nothing for now", "Keep all your gold · begin with no supplies", (game) => {
-        game.savingChoices += 1;
-        return "Rowan keeps every coin. That leaves room for later needs, though the journey begins with no supplies.";
+      option("🌲 1 — The Merchant's Trail", "Explore the marketplace: spending, saving, needs, and wants", (game) => {
+        game.trail = "merchant";
+        return "You follow the warm glow toward the marketplace, ready to decide what your gold is for.";
+      }),
+      option("🔮 2 — The Mystic's Trail", "Explore savings, investing, interest, risk, and growing your gold", (game) => {
+        game.trail = "mystic";
+        return "You step into the blue mist, where every promise of fortune asks you to understand the risk.";
+      }),
+      option("🐉 3 — The Warrior's Trail", "Take quests, earn gold, face emergencies, and explore borrowing and debt", (game) => {
+        game.trail = "warrior";
+        return "You grip your sword and head toward the quests, ready to earn gold and face the dangers ahead.";
       })
     ]
   },
@@ -211,6 +305,9 @@ const cinematic = document.querySelector("#cinematic");
 const cinematicArt = document.querySelector("#cinematic-art");
 const cinematicKicker = document.querySelector("#cinematic-kicker");
 const cinematicLine = document.querySelector("#cinematic-line");
+const introGold = document.querySelector("#intro-gold");
+const storyTranscript = document.querySelector("#story-transcript");
+const cinematicAudioStatus = document.querySelector("#cinematic-audio-status");
 const book = document.querySelector(".book");
 const bookStage = document.querySelector("#book-stage");
 const bookCaption = document.querySelector("#book-caption");
@@ -221,7 +318,6 @@ const playerEmailInput = document.querySelector("#player-email");
 const introDeck = document.querySelector("#intro-deck");
 const aboutStoryCopy = document.querySelector("#about-story-copy");
 const artDescription = document.querySelector("#art-desc");
-const skipButton = document.querySelector("#skip-intro");
 const cinematicSkip = document.querySelector("#cinematic-skip");
 const sceneKicker = document.querySelector("#scene-kicker");
 const sceneTitle = document.querySelector("#scene-title");
@@ -240,6 +336,7 @@ const soundLabel = document.querySelector("#sound-label");
 const narration = document.querySelector("#intro-narration");
 const pageViews = [...document.querySelectorAll("[data-page]")];
 const pageLinks = [...document.querySelectorAll(".nav-link")];
+const homeLinks = [...document.querySelectorAll('a[href="#home"]')];
 const profileNodes = {
   journeys: document.querySelector("#profile-journeys"),
   rescues: document.querySelector("#profile-rescues"),
@@ -265,7 +362,6 @@ const resourceFields = {
 const state = {};
 let currentChapter = 0;
 let hasChosen = false;
-let introTimers = [];
 let gameStarted = false;
 let soundOn = true;
 let journeySaved = false;
@@ -415,7 +511,7 @@ function resetGame() {
     health: 100, supplies: 0, capacity: 3, reputation: 0, items: new Set(), bankDeposit: 0,
     riskChoices: 0, purchases: 0, totalSpent: 0, essentialPurchases: 0, savingChoices: 0,
     safeChoices: 0, helpedVillagers: false, shortcut: false, daysLost: 0, lastDamage: 0,
-    ending: "", towerFundsReleased: false, interestEarned: 0
+    ending: "", towerFundsReleased: false, interestEarned: 0, trail: ""
   });
   currentChapter = 0;
   gameStarted = true;
@@ -437,6 +533,7 @@ function startCinematic() {
   resetGame();
   state.playerName = playerName;
   state.playerEmail = playerEmail;
+  state.gold = state.startingGold;
   introDeck.textContent = `A prince is trapped in the Tower of Shadows. Princess ${playerName} must cross an enchanted forest, making hard choices with the resources she has.`;
   aboutStoryCopy.textContent = `Follow Princess ${playerName} through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.`;
   artDescription.textContent = `Princess ${playerName} follows a winding path through the Enchanted Forest toward the Tower of Shadows.`;
@@ -446,27 +543,15 @@ function startCinematic() {
   beginButton.disabled = true;
   beginButton.querySelector("span:first-child").textContent = "The story is opening";
   cinematicArt.replaceChildren(document.querySelector("#grove-art").cloneNode(true));
+  introGold.textContent = `Your starting gold: ${state.startingGold} gold`;
+  cinematicAudioStatus.hidden = true;
+  cinematicAudioStatus.textContent = "";
+  renderIntroStory();
   cinematic.hidden = false;
   cinematic.focus();
+  cinematicArt.className = "cinematic-art";
+  setCaption("THE ENCHANTED FOREST", "Follow the story on the page as the narration plays.");
   playIntroNarration();
-  setCaption("ONCE UPON A TIME", "Beneath the moonlit branches of the Enchanted Grove...");
-  introTimers.push(window.setTimeout(() => {
-    cinematicArt.className = "cinematic-art is-tower";
-    setCaption("THE TOWER OF SHADOWS", "At the forest's far end, a prince is trapped. His lantern flickers like a distant star.");
-  }, 4200));
-  introTimers.push(window.setTimeout(() => {
-    cinematicArt.className = "cinematic-art";
-    setCaption("BACK AT THE GROVE", "At the forest's entrance, a new story is ready to begin.");
-  }, 9000));
-  introTimers.push(window.setTimeout(() => {
-    cinematicArt.className = "cinematic-art is-princess";
-    setCaption("MEET PRINCESS ROWAN", "Rowan takes a breath, steps onto the path, and chooses to begin.");
-  }, 12300));
-  introTimers.push(window.setTimeout(() => {
-    cinematicArt.className = "cinematic-art";
-    setCaption("THE GOLDEN COIN", `The coin tumbles... Rowan begins with ${state.startingGold} gold. Her adventure is her own.`);
-  }, 17000));
-  introTimers.push(window.setTimeout(startAdventure, 24000));
 }
 
 function setCaption(kicker, line) {
@@ -474,9 +559,34 @@ function setCaption(kicker, line) {
   cinematicLine.textContent = personalize(line);
 }
 
+function renderIntroStory() {
+  const fragment = document.createDocumentFragment();
+  introStory.forEach((section) => {
+    if (section.type === "trail") {
+      const trail = document.createElement("section");
+      trail.className = "transcript-trail";
+      const title = document.createElement("h3");
+      title.textContent = `${section.icon} ${section.title}`;
+      trail.append(title);
+      section.lines.forEach((line) => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = line;
+        trail.append(paragraph);
+      });
+      fragment.append(trail);
+      return;
+    }
+    const element = section.type === "quote" ? document.createElement("blockquote") : document.createElement("p");
+    element.className = section.type === "choice-intro" ? "transcript-choice-intro" : "";
+    element.textContent = section.type === "choice-intro" ? `${section.icon} ${section.text}` : section.text;
+    fragment.append(element);
+  });
+  storyTranscript.replaceChildren(fragment);
+}
+
 function skipCinematic() {
-  introTimers.forEach(window.clearTimeout);
-  introTimers = [];
+  narration.onended = null;
+  narration.onerror = null;
   narration.pause();
   narration.currentTime = 0;
   window.speechSynthesis?.cancel();
@@ -484,8 +594,8 @@ function skipCinematic() {
 }
 
 function startAdventure() {
-  introTimers.forEach(window.clearTimeout);
-  introTimers = [];
+  narration.onended = null;
+  narration.onerror = null;
   narration.pause();
   window.speechSynthesis?.cancel();
   cinematic.hidden = true;
@@ -517,7 +627,11 @@ function renderChapter() {
   progressLabel.textContent = chapter.id === "tower" ? "THE FINAL CHAPTER" : `CHAPTER ${currentChapter + 1} OF 9`;
   progressFill.style.width = `${(currentChapter / chapters.length) * 100}%`;
   progressCount.textContent = `${String(currentChapter + 1).padStart(2, "0")} / 09`;
-  chapterNote.textContent = currentChapter === 0 ? `Golden Coin roll: ${state.startingGold} gold` : `Starting gold: ${state.startingGold} · ${state.daysLost} day${state.daysLost === 1 ? "" : "s"} lost`;
+  const trailTitle = { merchant: "The Merchant's Trail", mystic: "The Mystic's Trail", warrior: "The Warrior's Trail" }[state.trail];
+  const journeyNote = currentChapter === 0
+    ? `Golden Coin roll: ${state.startingGold} gold`
+    : `Starting gold: ${state.startingGold} · ${state.daysLost} day${state.daysLost === 1 ? "" : "s"} lost`;
+  chapterNote.textContent = trailTitle ? `${journeyNote} · Your trail: ${trailTitle}` : journeyNote;
   renderResources();
 
   chapter.choices(state).forEach((choice, index) => {
@@ -638,8 +752,8 @@ function getFinancialProfile() {
 }
 
 function restartStory() {
-  introTimers.forEach(window.clearTimeout);
-  introTimers = [];
+  narration.onended = null;
+  narration.onerror = null;
   narration.pause();
   narration.currentTime = 0;
   window.speechSynthesis?.cancel();
@@ -676,25 +790,20 @@ function dragonDamage(game, amount) {
 function rollDie() { return Math.floor(Math.random() * 6) + 1; }
 
 function playIntroNarration() {
-  if (!soundOn) return;
-  window.speechSynthesis?.cancel();
-  if (elevenLabsNarrationPath && state.playerName === "Rowan") {
-    narration.src = elevenLabsNarrationPath;
-    narration.currentTime = 0;
-    narration.play().catch(() => speakWithSystemVoice());
-    return;
-  }
-  speakWithSystemVoice();
-}
-
-function speakWithSystemVoice() {
-  if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
-  const utterance = new SpeechSynthesisUtterance(personalize(introNarrationScript));
-  utterance.rate = 0.88;
-  utterance.pitch = 1.08;
-  const preferredVoice = window.speechSynthesis.getVoices().find((voice) => /female|samantha|victoria|zira|aria|jenny|ava/i.test(voice.name));
-  if (preferredVoice) utterance.voice = preferredVoice;
-  window.speechSynthesis.speak(utterance);
+  if (!soundOn) { startAdventure(); return; }
+  cinematicAudioStatus.hidden = true;
+  cinematicAudioStatus.textContent = "";
+  narration.src = introNarrationPath;
+  narration.currentTime = 0;
+  narration.onended = startAdventure;
+  narration.onerror = () => {
+    cinematicAudioStatus.textContent = "The narration audio could not be played. You can read the transcript and skip to choose a path.";
+    cinematicAudioStatus.hidden = false;
+  };
+  narration.play().catch(() => {
+    cinematicAudioStatus.textContent = "The narration audio could not be played. You can read the transcript and skip to choose a path.";
+    cinematicAudioStatus.hidden = false;
+  });
 }
 
 playerForm.addEventListener("submit", (event) => {
@@ -702,7 +811,9 @@ playerForm.addEventListener("submit", (event) => {
   startCinematic();
 });
 playerNameInput.addEventListener("input", () => playerNameInput.setCustomValidity(""));
-skipButton.addEventListener("click", startCinematic);
+homeLinks.forEach((link) => link.addEventListener("click", () => {
+  if (gameStarted) restartStory();
+}));
 cinematicSkip.addEventListener("click", skipCinematic);
 continueButton.addEventListener("click", advanceStory);
 window.addEventListener("hashchange", navigateToPage);
@@ -712,6 +823,10 @@ soundToggle.addEventListener("click", () => {
   soundToggle.setAttribute("aria-pressed", String(soundOn));
   soundToggle.setAttribute("aria-label", soundOn ? "Turn narration off" : "Turn narration on");
   soundLabel.textContent = soundOn ? "Narration on" : "Narration off";
-  if (!soundOn) { narration.pause(); narration.currentTime = 0; window.speechSynthesis?.cancel(); }
+  if (!soundOn) {
+    narration.pause();
+    narration.currentTime = 0;
+    if (!cinematic.hidden) startAdventure();
+  }
   else if (!cinematic.hidden) playIntroNarration();
 });
