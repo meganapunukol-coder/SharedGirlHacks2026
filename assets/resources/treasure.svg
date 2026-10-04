@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 500">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#3b2606"/><stop offset=".55" stop-color="#7a5313"/><stop offset="1" stop-color="#2a1a04"/></linearGradient>
+    <radialGradient id="halo" cx=".5" cy=".38" r=".5"><stop stop-color="#ffe9a3" stop-opacity=".75"/><stop offset=".5" stop-color="#f2c04e" stop-opacity=".22"/><stop offset="1" stop-color="#f2c04e" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gold" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fff0b0"/><stop offset=".5" stop-color="#e8b443"/><stop offset="1" stop-color="#a36c12"/></linearGradient>
+    <linearGradient id="wood" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#8a4e22"/><stop offset="1" stop-color="#4d2810"/></linearGradient>
+  </defs>
+  <rect width="330" height="500" fill="url(#bg)"/>
+  <rect width="330" height="500" fill="url(#halo)"/>
+  <g fill="#fff3c4"><path d="M60 70l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/><path d="M270 50l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/><path d="M285 170l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M40 200l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M168 36l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></g>
+  <path d="M110 150 165 70 220 150z" fill="#ffe9a3" opacity=".18"/>
+  <!-- open lid -->
+  <path d="M88 168q77-70 154 0v12H88z" fill="url(#wood)" stroke="#2e1606" stroke-width="3"/>
+  <path d="M88 168q77-70 154 0" fill="none" stroke="url(#gold)" stroke-width="8"/>
+  <!-- heaped coins -->
+  <g fill="url(#gold)" stroke="#8a5a0e" stroke-width="2">
+    <ellipse cx="128" cy="182" rx="16" ry="7"/><ellipse cx="150" cy="172" rx="16" ry="7"/><ellipse cx="176" cy="168" rx="16" ry="7"/><ellipse cx="200" cy="178" rx="16" ry="7"/>
+    <ellipse cx="114" cy="194" rx="16" ry="7"/><ellipse cx="140" cy="190" rx="16" ry="7"/><ellipse cx="166" cy="186" rx="16" ry="7"/><ellipse cx="192" cy="190" rx="16" ry="7"/><ellipse cx="216" cy="194" rx="16" ry="7"/>
+  </g>
+  <circle cx="165" cy="160" r="9" fill="#9fe7ff" stroke="#fff" stroke-width="2"/>
+  <!-- chest body -->
+  <rect x="86" y="196" width="158" height="88" rx="6" fill="url(#wood)" stroke="#2e1606" stroke-width="3"/>
+  <g fill="url(#gold)" stroke="#7a4d0a" stroke-width="2"><rect x="86" y="196" width="158" height="14"/><rect x="104" y="196" width="14" height="88"/><rect x="212" y="196" width="14" height="88"/><rect x="151" y="222" width="28" height="34" rx="5"/></g>
+  <circle cx="165" cy="236" r="4" fill="#2e1606"/><path d="M165 238v9" stroke="#2e1606" stroke-width="3"/>
+  <!-- spilled coins -->
+  <g fill="url(#gold)" stroke="#8a5a0e" stroke-width="2"><ellipse cx="70" cy="292" rx="15" ry="6"/><ellipse cx="258" cy="296" rx="15" ry="6"/><ellipse cx="236" cy="306" rx="13" ry="5"/></g>
+  <path d="M0 410q86-36 166-6t164-10v106H0z" fill="#1c1103"/>
+</svg>

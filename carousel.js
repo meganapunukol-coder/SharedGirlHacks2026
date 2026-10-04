@@ -29,6 +29,10 @@ export interface CarouselItem {
   img: string;
   ctaText?: string;
   ctaUrl?: string;
+  /** Golden "treasure" styling with a shimmer, for a highlighted resource. */
+  featured?: boolean;
+  /** Several links shown on the card in place of the single CTA; each opens in a new tab. */
+  branches?: { label: string; url: string }[];
 }
 
 export interface CoverFlowCarouselProps {
@@ -243,6 +247,7 @@ export function CoverFlowCarousel({
             return (
               <div
                 key={idx}
+                className={item.featured ? "carousel-treasure" : undefined}
                 onClick={() => !isCenter && goToSlide(idx)}
                 style={{
                   position: "absolute",
@@ -251,14 +256,16 @@ export function CoverFlowCarousel({
                   borderRadius: "18px",
                   overflow: "hidden",
                   backgroundColor: "#171311",
-                  border: "1px solid rgba(255, 255, 255, 0.12)",
+                  border: item.featured ? "2px solid #e8c25a" : "1px solid rgba(255, 255, 255, 0.12)",
                   transform,
                   opacity,
                   zIndex,
                   filter,
                   transformOrigin: "center center",
                   transition: "all 800ms cubic-bezier(0.25, 1, 0.5, 1)",
-                  boxShadow: isCenter
+                  boxShadow: item.featured
+                    ? "0 25px 60px rgba(0,0,0,0.85), 0 0 45px rgba(240,196,80,0.55), inset 0 0 22px rgba(255,214,110,0.35)"
+                    : isCenter
                     ? "0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(197,168,128,0.25)"
                     : "0 15px 35px rgba(0,0,0,0.5)",
                   cursor: isCenter ? "default" : "pointer",
@@ -289,6 +296,9 @@ export function CoverFlowCarousel({
                   }}
                 />
 
+                {/* Treasure Shimmer — a band of light sweeping across featured cards */}
+                {item.featured && <div className="carousel-treasure-shimmer" aria-hidden="true" />}
+
                 {/* Content Overlay */}
                 <div
                   style={{
@@ -315,7 +325,7 @@ export function CoverFlowCarousel({
                         fontSize: "0.78rem",
                         fontWeight: 600,
                         letterSpacing: "0.06em",
-                        color: "rgba(255,255,255,0.9)",
+                        color: item.featured ? "#ffd772" : "rgba(255,255,255,0.9)",
                         textShadow: "0 2px 6px rgba(0,0,0,0.8)",
                       }}
                     >
@@ -335,6 +345,7 @@ export function CoverFlowCarousel({
                     }}
                   >
                     <h2
+                      className={item.featured ? "carousel-treasure-title" : undefined}
                       style={{
                         fontSize: "1.65rem",
                         fontWeight: 900,
@@ -392,35 +403,75 @@ export function CoverFlowCarousel({
                       </p>
                     )}
 
-                    <a
-                      href={item.ctaUrl || "#"}
-                      onClick={(e) => {
-                        if (onCtaClick) {
-                          e.preventDefault();
-                          onCtaClick(item);
-                        }
-                      }}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        padding: "7px 18px",
-                        borderRadius: "9999px",
-                        background: "linear-gradient(135deg, #c5a880 0%, #a48256 100%)",
-                        color: "#110d0c",
-                        fontSize: "0.72rem",
-                        fontWeight: 800,
-                        letterSpacing: "0.14em",
-                        textTransform: "uppercase",
-                        textDecoration: "none",
-                        boxShadow: "0 4px 14px rgba(0,0,0,0.4), 0 0 15px rgba(197,168,128,0.3)",
-                        cursor: "pointer",
-                        transition: "transform 200ms ease, box-shadow 200ms ease",
-                      }}
-                    >
-                      <span>{item.ctaText || "View Menu"}</span>
-                      <ArrowRightIcon />
-                    </a>
+                    {item.branches?.length ? (
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          gap: "7px",
+                          width: "100%",
+                        }}
+                      >
+                        {item.branches.map((branch) => (
+                          <a
+                            key={branch.url}
+                            href={branch.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="carousel-treasure-branch"
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "5px",
+                              padding: "8px 6px",
+                              borderRadius: "9999px",
+                              background: "linear-gradient(135deg, #ffe28a 0%, #e0a93a 55%, #b8801f 100%)",
+                              color: "#2a1a05",
+                              fontSize: "0.66rem",
+                              fontWeight: 800,
+                              letterSpacing: "0.1em",
+                              textTransform: "uppercase",
+                              textDecoration: "none",
+                              boxShadow: "0 4px 14px rgba(0,0,0,0.45), 0 0 14px rgba(255,205,90,0.45)",
+                            }}
+                          >
+                            <span>{branch.label}</span>
+                            <ArrowRightIcon />
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      <a
+                        href={item.ctaUrl || "#"}
+                        onClick={(e) => {
+                          if (onCtaClick) {
+                            e.preventDefault();
+                            onCtaClick(item);
+                          }
+                        }}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          padding: "7px 18px",
+                          borderRadius: "9999px",
+                          background: "linear-gradient(135deg, #c5a880 0%, #a48256 100%)",
+                          color: "#110d0c",
+                          fontSize: "0.72rem",
+                          fontWeight: 800,
+                          letterSpacing: "0.14em",
+                          textTransform: "uppercase",
+                          textDecoration: "none",
+                          boxShadow: "0 4px 14px rgba(0,0,0,0.4), 0 0 15px rgba(197,168,128,0.3)",
+                          cursor: "pointer",
+                          transition: "transform 200ms ease, box-shadow 200ms ease",
+                        }}
+                      >
+                        <span>{item.ctaText || "View Menu"}</span>
+                        <ArrowRightIcon />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

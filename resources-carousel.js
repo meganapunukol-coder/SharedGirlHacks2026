@@ -7,8 +7,24 @@ const carouselScripts = [
   "https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"
 ];
 
-// Each card opens its link in a new tab.
+// Each card opens its link in a new tab. A `featured` card is drawn as golden treasure, and its
+// `branches` appear as separate links on the card.
 const resourceLinks = [
+  {
+    tag: "#GoldenTreasure",
+    titleLine1: "INVESTOPEDIA",
+    titleLine2: "– THE TREASURE VAULT",
+    desc: "Practice with pretend money, then explore investing, trading, and every money word you meet",
+    img: "assets/resources/treasure.svg",
+    ctaUrl: "https://www.investopedia.com/simulator/",
+    featured: true,
+    branches: [
+      { label: "Simulator", url: "https://www.investopedia.com/simulator/" },
+      { label: "Investing", url: "https://www.investopedia.com/investing-4427685" },
+      { label: "Trading", url: "https://www.investopedia.com/trading-4427765" },
+      { label: "Dictionary", url: "https://www.investopedia.com/financial-term-dictionary-4769738" }
+    ]
+  },
   {
     tag: "#NeedsAndWants",
     titleLine1: "MONEY AS YOU GROW",
@@ -86,14 +102,18 @@ async function loadCarouselComponent() {
 function renderFallbackLinks(container) {
   const list = document.createElement("ul");
   list.className = "resources-carousel-fallback";
-  resourceLinks.forEach((item) => {
-    const entry = document.createElement("li");
+  const makeLink = (url, text) => {
     const link = document.createElement("a");
-    link.href = item.ctaUrl;
+    link.href = url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.textContent = `${item.titleLine1} ${item.titleLine2 ?? ""}`.trim();
-    entry.append(link);
+    link.textContent = text;
+    return link;
+  };
+  resourceLinks.forEach((item) => {
+    const entry = document.createElement("li");
+    entry.append(makeLink(item.ctaUrl, `${item.titleLine1} ${item.titleLine2 ?? ""}`.trim()));
+    item.branches?.forEach((branch) => entry.append(" · ", makeLink(branch.url, branch.label)));
     list.append(entry);
   });
   container.replaceChildren(list);

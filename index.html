@@ -11,7 +11,7 @@
   <link rel="preload" as="image" href="assets/forest-background.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="intro.js" defer></script>
   <script src="game.js" defer></script>
@@ -23,45 +23,14 @@
   <div class="intro-video" id="intro-video" role="dialog" aria-label="Opening film" aria-modal="true">
     <video id="intro-video-player" src="assets/ElevenLabs_video_gemini-omni-flash-1-1_make%20a%20video%20it_2026-10-03T20_41_21.mp4" playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"></video>
     <div class="grove-intro" id="grove-intro">
-      <div class="grove-intro-scene" aria-hidden="true">
-        <div class="grove-intro-forest"></div>
-        <div class="grove-intro-glow"></div>
-        <div class="grove-intro-fireflies"></div>
-        <svg class="grove-intro-branches grove-intro-branches-left" viewBox="0 0 300 800" preserveAspectRatio="xMinYMid slice">
-          <path d="M-20 820C40 640 30 470 70 330 100 220 150 140 230 60" fill="none" stroke="#0b1c16" stroke-width="34" stroke-linecap="round"/>
-          <path d="M60 380c60-30 110-30 170 0M80 560c50-10 90 0 130 30" fill="none" stroke="#0b1c16" stroke-width="12" stroke-linecap="round"/>
-          <g fill="#0f2a20">
-            <path d="M230 0q-40 40 0 80 40-40 0-80z"/><path d="M170 50q-50 20-30 70 50-20 30-70z"/><path d="M250 100q-10 50 40 60 10-50-40-60z"/>
-            <path d="M225 360q30-40 70-20-30 40-70 20z"/><path d="M190 330q10-50 55-50-10 50-55 50z"/><path d="M205 590q35-30 70-5-35 30-70 5z"/>
-            <path d="M-10 250q60-30 90 20-60 30-90-20z"/><path d="M0 470q50-40 90 0-50 40-90 0z"/><path d="M-20 680q70-20 100 30-70 20-100-30z"/>
-          </g>
-          <g fill="#173d2c"><path d="M120 150q-20-40 20-60 20 40-20 60z"/><path d="M40 330q-30-30 0-60 30 30 0 60z"/><path d="M150 640q-10-45 35-50 10 45-35 50z"/></g>
-        </svg>
-        <svg class="grove-intro-branches grove-intro-branches-right" viewBox="0 0 300 800" preserveAspectRatio="xMaxYMid slice">
-          <g transform="matrix(-1 0 0 1 300 0)">
-            <path d="M-20 820C30 660 50 480 80 360 110 240 160 130 240 40" fill="none" stroke="#0b1c16" stroke-width="34" stroke-linecap="round"/>
-            <path d="M70 420c60-30 110-25 165 10M70 620c50-10 90 0 130 30" fill="none" stroke="#0b1c16" stroke-width="12" stroke-linecap="round"/>
-            <g fill="#0f2a20">
-              <path d="M240 -20q-40 40 0 80 40-40 0-80z"/><path d="M180 70q-50 20-30 70 50-20 30-70z"/><path d="M230 410q30-40 70-20-30 40-70 20z"/>
-              <path d="M195 380q10-50 55-50-10 50-55 50z"/><path d="M200 650q35-30 70-5-35 30-70 5z"/><path d="M-10 300q60-30 90 20-60 30-90-20z"/>
-              <path d="M0 530q50-40 90 0-50 40-90 0z"/><path d="M-20 740q70-20 100 30-70 20-100-30z"/>
-            </g>
-            <g fill="#173d2c"><path d="M130 190q-20-40 20-60 20 40-20 60z"/><path d="M45 390q-30-30 0-60 30 30 0 60z"/><path d="M150 700q-10-45 35-50 10 45-35 50z"/></g>
-          </g>
-        </svg>
-        <div class="grove-intro-shade"></div>
-      </div>
-      <div class="grove-intro-title">
-        <span class="grove-intro-kicker">A CHOOSE-YOUR-OWN-ADVENTURE</span>
-        <span class="grove-intro-name">Into the <em>Unknown</em></span>
-      </div>
-      <div class="grove-intro-tagline">
-        <p>The grove has been waiting for you.</p>
+      <video class="grove-intro-walk" src="assets/Intro%20Forest%20Walkthrough.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+      <div class="grove-intro-shade" aria-hidden="true"></div>
+      <div class="grove-intro-center">
+        <p class="grove-intro-heading">Start Your Adventure</p>
         <button class="grove-intro-enter" id="grove-intro-enter" type="button">Enter the grove <span aria-hidden="true">✦</span></button>
       </div>
-      <div class="grove-intro-hint" aria-hidden="true">
-        <span>SCROLL TO ENTER</span>
-        <svg width="14" height="18" viewBox="0 0 14 18"><path d="M7 1 L7 17 M2 12 L7 17 L12 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="grove-intro-hint" role="img" aria-label="Scroll down to walk into the forest">
+        <svg width="22" height="30" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M2 12 L7 17 L12 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="grove-intro-progress"><span></span></div>
     </div>

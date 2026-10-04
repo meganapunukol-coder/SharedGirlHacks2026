@@ -101,18 +101,18 @@ const chapters = [
     text: "The old woman's warning lingers as the three trails open before you. Your prince is waiting, and the gold in your pouch is limited.",
     lesson: "Needs, wants, saving, investing, risk, and earning",
     choices: () => [
-      option("🌲 1 — The Merchant's Trail", "Explore the marketplace: spending, saving, needs, and wants", (game) => {
+      trailOption("merchant", "🌲", option("The Merchant's Trail", "Explore the marketplace: spending, saving, needs, and wants", (game) => {
         game.trail = "merchant";
         return "You follow the warm glow toward the marketplace, ready to decide what your gold is for.";
-      }),
-      option("🔮 2 — The Mystic's Trail", "Explore savings, investing, interest, risk, and growing your gold", (game) => {
+      })),
+      trailOption("mystic", "🔮", option("The Mystic's Trail", "Explore savings, investing, interest, risk, and growing your gold", (game) => {
         game.trail = "mystic";
         return "You step into the blue mist, where every promise of fortune asks you to understand the risk.";
-      }),
-      option("🐉 3 — The Warrior's Trail", "Take quests, earn gold, face emergencies, and explore borrowing and debt", (game) => {
+      })),
+      trailOption("warrior", "🐉", option("The Warrior's Trail", "Take quests, earn gold, face emergencies, and explore borrowing and debt", (game) => {
         game.trail = "warrior";
         return "You grip your sword and head toward the quests, ready to earn gold and face the dangers ahead.";
-      })
+      }))
     ]
   },
   {
@@ -700,13 +700,14 @@ function renderChapter() {
   chapter.choices(state).forEach((choice, index) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "choice-button";
+    button.className = choice.theme ? `choice-button choice-trail choice-trail-${choice.theme}` : "choice-button";
     button.disabled = !choice.available;
     button.title = choice.available ? "" : choice.lockedMessage;
+    // Trail choices show their trail's icon instead of a letter.
     const marker = document.createElement("span");
-    marker.className = "choice-marker";
+    marker.className = choice.theme ? "choice-trail-icon" : "choice-marker";
     marker.setAttribute("aria-hidden", "true");
-    marker.textContent = String.fromCharCode(65 + index);
+    marker.textContent = choice.icon ?? String.fromCharCode(65 + index);
     const content = document.createElement("span");
     content.className = "choice-content";
     const label = document.createElement("span");
@@ -728,6 +729,11 @@ function renderChapter() {
 
 function option(label, detail, resolve, canChoose = () => true, lockedMessage = "") {
   return { label, detail, resolve, available: canChoose(state), lockedMessage };
+}
+
+// A trail choice is drawn as a scroll in its trail's style (see .choice-trail-* in styles.css).
+function trailOption(theme, icon, choice) {
+  return { ...choice, theme, icon };
 }
 
 function selectChoice(choice, selectedButton) {
