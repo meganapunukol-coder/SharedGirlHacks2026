@@ -1,6 +1,6 @@
 # Into the Unknown
 
-A choose-your-own-adventure about money choices. A princess travels through the Enchanted Forest to reach the Tower of Shadows and rescue Prince Ellis.
+A choose-your-own-adventure about money choices. A princess travels through the Enchanted Forest to reach the Tower of Shadows and rescue her Prince.
 
 ## Play
 
