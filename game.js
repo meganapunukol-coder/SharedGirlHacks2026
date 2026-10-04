@@ -319,6 +319,10 @@ const introDeck = document.querySelector("#intro-deck");
 const aboutStoryCopy = document.querySelector("#about-story-copy");
 const artDescription = document.querySelector("#art-desc");
 const cinematicSkip = document.querySelector("#cinematic-skip");
+const sceneArt = document.querySelector(".scene-art");
+const chapterArt = document.querySelector("#chapter-art");
+const groveArt = document.querySelector("#grove-art");
+const artNote = document.querySelector(".art-note");
 const sceneKicker = document.querySelector("#scene-kicker");
 const sceneTitle = document.querySelector("#scene-title");
 const sceneText = document.querySelector("#scene-text");
@@ -615,6 +619,14 @@ function renderResources() {
 
 function renderChapter() {
   const chapter = chapters[currentChapter];
+  const showChapterArt = chapter.id === "gate";
+  chapterArt.hidden = !showChapterArt;
+  groveArt.toggleAttribute("hidden", showChapterArt);
+  artNote.hidden = showChapterArt;
+  sceneArt.classList.toggle("has-chapter-image", showChapterArt);
+  sceneArt.setAttribute("aria-label", showChapterArt
+    ? "Princess standing before three paths in an enchanted forest"
+    : "Illustration of an enchanted forest at twilight");
   hasChosen = false;
   sceneKicker.textContent = chapter.kicker;
   sceneTitle.textContent = chapter.title;
