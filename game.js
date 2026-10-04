@@ -321,6 +321,15 @@ const artDescription = document.querySelector("#art-desc");
 const cinematicSkip = document.querySelector("#cinematic-skip");
 const sceneArt = document.querySelector(".scene-art");
 const chapterArt = document.querySelector("#chapter-art");
+const pathsArt = document.querySelector("#paths-art");
+const marketArt = document.querySelector("#market-art");
+const stormArt = document.querySelector("#storm-art");
+const dragonArt = document.querySelector("#dragon-art");
+const bankArt = document.querySelector("#bank-art");
+const wizardArt = document.querySelector("#wizard-art");
+const bridgeArt = document.querySelector("#bridge-art");
+const towerArt = document.querySelector("#tower-art");
+const endingArt = document.querySelector("#ending-art");
 const groveArt = document.querySelector("#grove-art");
 const artNote = document.querySelector(".art-note");
 const sceneKicker = document.querySelector("#scene-kicker");
@@ -619,14 +628,56 @@ function renderResources() {
 
 function renderChapter() {
   const chapter = chapters[currentChapter];
-  const showChapterArt = chapter.id === "gate";
-  chapterArt.hidden = !showChapterArt;
+  const showTrailArt = chapter.id === "gate";
+  const showPathArt = chapter.id === "paths";
+  const showMarketArt = chapter.id === "market";
+  const showStormArt = chapter.id === "storm";
+  const showDragonArt = chapter.id === "dragon";
+  const showBankArt = chapter.id === "bank";
+  const showWizardArt = chapter.id === "wizard";
+  const showBridgeArt = chapter.id === "bridge";
+  const showTowerArt = chapter.id === "tower";
+  const showChapterArt = showTrailArt || showPathArt || showMarketArt || showStormArt || showDragonArt ||
+    showBankArt || showWizardArt || showBridgeArt || showTowerArt;
+  chapterArt.hidden = !showTrailArt;
+  pathsArt.hidden = !showPathArt;
+  marketArt.hidden = !showMarketArt;
+  stormArt.hidden = !showStormArt;
+  dragonArt.hidden = !showDragonArt;
+  bankArt.hidden = !showBankArt;
+  wizardArt.hidden = !showWizardArt;
+  bridgeArt.hidden = !showBridgeArt;
+  towerArt.hidden = !showTowerArt;
   groveArt.toggleAttribute("hidden", showChapterArt);
   artNote.hidden = showChapterArt;
   sceneArt.classList.toggle("has-chapter-image", showChapterArt);
-  sceneArt.setAttribute("aria-label", showChapterArt
-    ? "Princess standing before three paths in an enchanted forest"
-    : "Illustration of an enchanted forest at twilight");
+  sceneArt.classList.toggle("has-paths-image", showPathArt);
+  sceneArt.classList.toggle("has-market-image", showMarketArt);
+  sceneArt.classList.toggle("has-storm-image", showStormArt);
+  sceneArt.classList.toggle("has-dragon-image", showDragonArt);
+  sceneArt.classList.toggle("has-bank-image", showBankArt);
+  sceneArt.classList.toggle("has-wizard-image", showWizardArt);
+  sceneArt.classList.toggle("has-bridge-image", showBridgeArt);
+  sceneArt.classList.toggle("has-tower-image", showTowerArt);
+  sceneArt.setAttribute("aria-label", showTrailArt
+    ? "Princess standing before three trails in an enchanted forest"
+    : showPathArt
+      ? "Princess choosing between the golden safe path and the uncertain shadow path"
+      : showMarketArt
+        ? "Princess exploring the Fairy Market"
+        : showStormArt
+          ? "Princess seeking shelter during a storm"
+          : showDragonArt
+            ? "Princess facing the dragon guarding the forest bridge"
+            : showBankArt
+              ? "Princess visiting the Fairy Bank"
+              : showWizardArt
+                ? "Princess meeting the wandering wizard"
+                : showBridgeArt
+                  ? "Princess approaching the broken bridge"
+                  : showTowerArt
+                    ? "Princess at the Tower of Shadows gate"
+                    : "Illustration of an enchanted forest at twilight");
   hasChosen = false;
   sceneKicker.textContent = chapter.kicker;
   sceneTitle.textContent = chapter.title;
@@ -723,6 +774,23 @@ function renderEnding() {
   const endingText = personalize(rawEndingText);
   const profile = getFinancialProfile();
   saveCompletedJourney(profile);
+  [chapterArt, pathsArt, marketArt, stormArt, dragonArt, bankArt, wizardArt, bridgeArt, towerArt].forEach((image) => {
+    image.hidden = true;
+  });
+  endingArt.hidden = false;
+  groveArt.toggleAttribute("hidden", true);
+  artNote.hidden = true;
+  sceneArt.classList.toggle("has-chapter-image", false);
+  sceneArt.classList.toggle("has-paths-image", false);
+  sceneArt.classList.toggle("has-market-image", false);
+  sceneArt.classList.toggle("has-storm-image", false);
+  sceneArt.classList.toggle("has-dragon-image", false);
+  sceneArt.classList.toggle("has-bank-image", false);
+  sceneArt.classList.toggle("has-wizard-image", false);
+  sceneArt.classList.toggle("has-bridge-image", false);
+  sceneArt.classList.toggle("has-tower-image", false);
+  sceneArt.classList.toggle("has-ending-image", true);
+  sceneArt.setAttribute("aria-label", "The princess and prince reunited on the path home");
   sceneKicker.textContent = "THE GROVE REMEMBERS";
   sceneTitle.textContent = personalize(state.ending === "unfinished" ? "The Tower is not the end of Rowan's story." : "The prince is free. The story belongs to Rowan.");
   sceneText.textContent = endingText;
