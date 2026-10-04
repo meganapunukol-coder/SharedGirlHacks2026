@@ -1,0 +1,3 @@
+# Holds the Gemini API key for start-grove-server.py. Never commit it.
+.env
+__pycache__/

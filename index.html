@@ -14,6 +14,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="intro.js" defer></script>
+  <script src="ai-config.js" defer></script>
+  <script src="journey-report.js" defer></script>
   <script src="game.js" defer></script>
   <script src="assets/sparkles-data.js" defer></script>
   <script src="sparkles.js" defer></script>
@@ -68,7 +70,7 @@
           <input id="player-name" name="name" type="text" autocomplete="name" maxlength="40" required>
           <label for="player-email">Your email</label>
           <input id="player-email" name="email" type="email" autocomplete="email" required>
-          <p class="form-privacy">Your details stay in this browser session and are not sent anywhere.</p>
+          <p class="form-privacy">Your name and email stay in this browser and are never sent anywhere. If you use the AI Grove Guide in your journey report, only your story choices are shared with Google's Gemini AI.</p>
           <button class="primary-button" id="begin-button" type="submit">
             <span>Open the story</span><span class="button-arrow" aria-hidden="true">↗</span>
           </button>
@@ -102,28 +104,10 @@
       <div class="intro-bottom"><span>01</span><span class="intro-bottom-rule"></span><span>THE FIRST PAGE</span></div>
     </section>
 
-    <section class="cinematic" id="cinematic" role="dialog" aria-label="Storybook introduction" aria-modal="true" tabindex="-1" hidden>
+    <section class="cinematic" id="cinematic" role="dialog" aria-label="The story begins" aria-modal="true" tabindex="-1" hidden>
+      <video class="cinematic-video" id="story-video" src="assets/Story_withPinkHair.mp4" playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"></video>
       <a class="cinematic-home" href="#home">← The Grove</a>
-      <div class="cinematic-scene">
-        <div class="cinematic-art" id="cinematic-art" aria-hidden="true"></div>
-        <div class="cinematic-vignette" aria-hidden="true"></div>
-        <div class="cinematic-caption" aria-live="polite" aria-atomic="true">
-          <span class="cinematic-kicker" id="cinematic-kicker">THE ENCHANTED FOREST</span>
-          <p id="cinematic-line">The story will begin when the narration starts.</p>
-        </div>
-      </div>
-      <aside class="cinematic-reader" aria-label="Story transcript">
-        <div class="cinematic-reader-heading">
-          <div>
-            <span class="cinematic-reader-kicker">YOUR STORY</span>
-            <h2>The Enchanted Forest</h2>
-          </div>
-          <span class="starting-gold-badge" id="intro-gold">Your starting gold: —</span>
-        </div>
-        <p class="transcript-sync-note">Follow along as the attached narration reads this story.</p>
-        <div class="story-transcript" id="story-transcript" aria-live="off"></div>
-        <p class="cinematic-audio-status" id="cinematic-audio-status" role="status" hidden></p>
-      </aside>
+      <p class="cinematic-video-status" id="story-video-status" role="status" hidden>The story video couldn't play. Select “Skip story” to choose your path.</p>
       <button class="cinematic-skip" id="cinematic-skip" type="button">Skip story <span aria-hidden="true">↗</span></button>
     </section>
 
@@ -226,7 +210,7 @@
           <span class="card-ornament" aria-hidden="true">✳</span>
           <p class="scene-kicker">OUR PURPOSE</p>
           <h2>Learn by living the story.</h2>
-          <p id="about-story-copy">Follow the princess through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—without reducing your journey to a score.</p>
+          <p id="about-story-copy">Follow the princess through a forest of surprises. Each choice introduces a money idea—like planning for needs, weighing risk, or keeping something in reserve—and your journey report shows what went well and what to try next time.</p>
         </article>
         <article class="story-card about-card about-card-accent">
           <span class="card-ornament" aria-hidden="true">✦</span>
@@ -285,6 +269,7 @@
         <article class="stat-card"><span class="stat-icon" aria-hidden="true">🏰</span><span class="stat-label">PRINCES RESCUED</span><strong id="profile-rescues">0</strong></article>
         <article class="stat-card"><span class="stat-icon" aria-hidden="true">💚</span><span class="stat-label">AVERAGE HEALTH</span><strong id="profile-health">—</strong></article>
         <article class="stat-card"><span class="stat-icon" aria-hidden="true">🪙</span><span class="stat-label">GOLD SPENT</span><strong id="profile-gold-spent">0</strong></article>
+        <article class="stat-card"><span class="stat-icon" aria-hidden="true">✦</span><span class="stat-label">BEST SCORE</span><strong id="profile-best-score">—</strong></article>
       </div>
       <div class="profile-details">
         <article class="story-card profile-insight">
@@ -304,8 +289,62 @@
         <a class="primary-button" href="#home"><span>Back to the grove</span><span class="button-arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
+
+    <section class="site-page interior-page report-page" id="report-page" data-page="report" aria-labelledby="report-title" hidden>
+      <div class="page-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> YOUR JOURNEY REPORT</p>
+        <h1 id="report-title">Your journey report</h1>
+        <p class="page-deck" id="report-deck"></p>
+      </div>
+      <div class="report-missing story-card" id="report-missing" hidden>
+        <p>This report couldn't be found on this device. Reports are saved in the browser where the journey was played.</p>
+        <a class="continue-profile-link" href="#profile">Back to My Profile <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="report-body" id="report-body" hidden>
+        <div class="report-overview">
+          <article class="story-card report-score-card">
+            <div class="report-score-ring" id="report-score-ring" role="img" aria-labelledby="report-score-label">
+              <strong id="report-score">0</strong><span>/ 100</span>
+            </div>
+            <div>
+              <p class="scene-kicker" id="report-score-label">WISDOM SCORE</p>
+              <p class="report-counts" id="report-counts"></p>
+              <p class="report-resources" id="report-resources"></p>
+            </div>
+          </article>
+          <article class="story-card report-summary-card">
+            <p class="scene-kicker">THE GROVE GUIDE'S REFLECTION</p>
+            <div class="guide-text" id="guide-summary" aria-live="polite"></div>
+            <button class="restart-button guide-retry" id="guide-summary-retry" type="button" hidden>Try again</button>
+          </article>
+        </div>
+        <div class="report-columns">
+          <article class="story-card report-timeline-card">
+            <p class="scene-kicker">CHOICE BY CHOICE</p>
+            <h2>How each choice measured up</h2>
+            <ol class="report-timeline" id="report-timeline"></ol>
+          </article>
+          <article class="story-card guide-chat-card" aria-labelledby="guide-chat-title">
+            <p class="scene-kicker">ASK THE GROVE GUIDE</p>
+            <h2 id="guide-chat-title">Questions about your journey?</h2>
+            <div class="guide-chat-log" id="guide-chat-log" aria-live="polite"></div>
+            <div class="guide-suggestions" id="guide-suggestions">
+              <button type="button">What did I do best?</button>
+              <button type="button">What should I do differently next time?</button>
+              <button type="button">Why was my riskiest choice risky?</button>
+            </div>
+            <form class="guide-chat-form" id="guide-chat-form">
+              <label class="visually-hidden" for="guide-chat-input">Your question</label>
+              <input id="guide-chat-input" type="text" maxlength="400" autocomplete="off" placeholder="Ask about your choices…">
+              <button class="primary-button" id="guide-chat-send" type="submit">Ask</button>
+            </form>
+            <p class="guide-chat-remaining" id="guide-chat-remaining"></p>
+            <p class="guide-note">The Grove Guide is an AI. It can make mistakes, and this is a learning game, not financial advice.</p>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
-  <audio id="intro-narration" preload="none"></audio>
   <footer class="site-footer"><span>MADE FOR CURIOUS MINDS</span><span>✳</span><span>THE GROVE GROWS WITH EVERY CHOICE</span></footer>
 </body>
 </html>
