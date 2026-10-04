@@ -823,31 +823,31 @@ function playIntroVideo() {
   if (!overlay) return;
   const video = overlay.querySelector("video");
   const skip = overlay.querySelector("#intro-video-skip");
+  const enter = overlay.querySelector("#grove-intro-enter");
   let finished = false;
   document.documentElement.classList.add("is-intro-video-playing");
 
-  const finish = () => {
-    if (finished) return;
-    finished = true;
-    video.pause();
-    overlay.classList.add("is-done");
-    document.documentElement.classList.remove("is-intro-video-playing");
-    window.setTimeout(() => overlay.remove(), 700);
-  };
-
   // Browsers only allow a video to play with sound after the visitor interacts with the page,
-  // so the film starts from a full-screen "tap to begin" button. That click unlocks the audio.
-  const start = overlay.querySelector("#intro-video-start");
-  start.focus({ preventScroll: true });
-  start.addEventListener("click", () => {
-    start.remove();
+  // so the film starts from the "Enter the grove" button at the end of the grove intro (intro.js).
+  const startFilm = () => {
     video.muted = false;
     video.volume = 1;
     video.play().catch(() => {
       video.muted = true;
       video.play().catch(finish);
     });
-  }, { once: true });
+  };
+  const groveIntro = window.mountGroveIntro(overlay.querySelector("#grove-intro"), { onEnter: startFilm });
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    video.pause();
+    groveIntro.destroy();
+    overlay.classList.add("is-done");
+    document.documentElement.classList.remove("is-intro-video-playing");
+    window.setTimeout(() => overlay.remove(), 700);
+  };
 
   // The film cannot be paused: resume it whenever something (media keys, OS controls) pauses it.
   video.addEventListener("pause", () => { if (!finished && !video.ended) video.play().catch(() => {}); });
@@ -855,7 +855,7 @@ function playIntroVideo() {
   video.addEventListener("error", finish);
   overlay.addEventListener("contextmenu", (event) => event.preventDefault());
   overlay.addEventListener("keydown", (event) => {
-    if (event.target !== skip && event.target !== start && [" ", "k", "K", "MediaPlayPause"].includes(event.key)) event.preventDefault();
+    if (event.target !== skip && event.target !== enter && [" ", "k", "K", "MediaPlayPause"].includes(event.key)) event.preventDefault();
   });
   skip.addEventListener("click", finish);
 }
